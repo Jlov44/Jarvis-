@@ -7,20 +7,38 @@
 <title>Jarvis</title>
 <style>
 body{background:#0b1220;color:#7fdbff;font-family:-apple-system,sans-serif;margin:0;padding:24px;text-align:center;min-height:100vh}
-h1{margin-top:60px;font-size:28px}
+h1{margin-top:40px;font-size:28px}
+#time{font-size:56px;font-weight:600;margin-top:20px}
+#date{font-size:20px;opacity:.8;margin-bottom:10px}
 #weather{font-size:22px;margin:24px 0;min-height:60px}
 button{background:#12304d;color:#7fdbff;border:1px solid #7fdbff;border-radius:14px;padding:16px 28px;font-size:18px}
 </style>
 </head>
 <body>
 <h1 id="greeting"></h1>
+<div id="time"></div>
+<div id="date"></div>
 <div id="weather">Checking the weather...</div>
 <button id="brief">Brief me</button>
 <script>
-const h = new Date().getHours();
-const part = h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
-const greeting = part + ", John.";
-document.getElementById("greeting").textContent = greeting;
+function getGreeting(){
+  const h = new Date().getHours();
+  const part = h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+  return part + ", John.";
+}
+function timeText(){
+  return new Date().toLocaleTimeString([], {hour:"numeric", minute:"2-digit"});
+}
+function dateText(){
+  return new Date().toLocaleDateString([], {weekday:"long", month:"long", day:"numeric"});
+}
+function updateClock(){
+  document.getElementById("greeting").textContent = getGreeting();
+  document.getElementById("time").textContent = timeText();
+  document.getElementById("date").textContent = dateText();
+}
+updateClock();
+setInterval(updateClock, 1000);
 
 let weatherText = "";
 const codes = {0:"clear",1:"mostly clear",2:"partly cloudy",3:"overcast",45:"foggy",48:"foggy",
@@ -53,7 +71,9 @@ function speak(text){
   speechSynthesis.speak(new SpeechSynthesisUtterance(text));
 }
 
-document.getElementById("brief").onclick = () => speak(greeting + " " + weatherText);
+document.getElementById("brief").onclick = () => {
+  speak(getGreeting() + " It is " + timeText() + " on " + dateText() + ". " + weatherText);
+};
 loadWeather();
 </script>
 </body>
