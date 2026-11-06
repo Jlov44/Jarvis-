@@ -83,3 +83,10 @@ function speak(text){
   });
 }
 
+document.getElementById("brief").onclick = () => {
+  speak(getGreeting() + " It is " + timeText() + " on " + dateText() + ". " + weatherText);
+};
+loadWeather();
+</script>
+</body>
+</html>
