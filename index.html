@@ -1,84 +1,244 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Jarvis">
+<meta name="theme-color" content="#050b16">
 <title>Jarvis</title>
 <style>
-body{background:#0b1220;color:#7fdbff;font-family:-apple-system,sans-serif;margin:0;padding:20px;text-align:center}
-h1{margin:20px 0 0;font-size:26px}
-#time{font-size:48px;font-weight:600;margin-top:8px}
-#date{font-size:18px;opacity:.8}
-#weather{font-size:17px;margin:12px 0 16px;min-height:24px}
-button{background:#12304d;color:#7fdbff;border:1px solid #7fdbff;border-radius:14px;padding:14px 22px;font-size:17px}
-#mic{font-size:20px;padding:16px 34px}
-form{display:flex;gap:8px;margin:14px 0}
-input{flex:1;background:#0f1a2e;color:#7fdbff;border:1px solid #2a4a6b;border-radius:12px;padding:12px;font-size:16px}
-#log{text-align:left;max-height:220px;overflow-y:auto;margin:10px 0;padding:6px}
-.you{color:#fff;margin:6px 0;text-align:right}
-.jv{margin:6px 0}
-#timer{font-size:32px;font-weight:600;min-height:40px;margin:8px 0}
-h2{font-size:18px;margin:22px 0 6px;text-align:left}
-ul{list-style:none;padding:0;margin:0;text-align:left}
-li{background:#0f1a2e;border:1px solid #1d3550;border-radius:10px;padding:10px 12px;margin:6px 0}
-li.empty{opacity:.5}
-.hint{font-size:13px;opacity:.6;text-align:left}
+:root{--bg:#050b16;--panel:#0c1729;--line:#173050;--cy:#7fdbff;--cy2:#2bb8ff;--txt:#d8f3ff;--dim:#6f93ad}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:radial-gradient(circle at 50% -10%,#10294a 0,var(--bg) 60%) fixed;color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,sans-serif;padding:calc(env(safe-area-inset-top) + 14px) 18px calc(96px + env(safe-area-inset-bottom));min-height:100vh}
+section{display:none;max-width:560px;margin:0 auto}
+section.on{display:block}
+h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:22px 0 8px}
+.center{text-align:center}
+
+/* reactor */
+.reactor{position:relative;width:180px;height:180px;margin:6px auto 4px;cursor:pointer}
+.reactor div{position:absolute;border-radius:50%}
+.ring1{inset:0;border:2px solid rgba(127,219,255,.5);box-shadow:0 0 24px rgba(43,184,255,.45),inset 0 0 24px rgba(43,184,255,.25)}
+.ring2{inset:16px;border:3px dashed rgba(127,219,255,.7);animation:spin 18s linear infinite}
+.ring3{inset:38px;border:2px solid rgba(127,219,255,.8);box-shadow:0 0 16px rgba(43,184,255,.6)}
+.core{inset:62px;background:radial-gradient(circle,#fff 0,#bdf0ff 35%,#2bb8ff 75%,#0a5a8a 100%);box-shadow:0 0 40px 10px rgba(43,184,255,.7);animation:pulse 3s ease-in-out infinite}
+.reactor.active .ring2{animation-duration:3s}
+.reactor.active .core{animation-duration:.8s}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{50%{transform:scale(1.12);box-shadow:0 0 60px 18px rgba(43,184,255,.9)}}
+.tap{font-size:12px;color:var(--dim);margin-bottom:6px}
+
+#greeting{font-size:20px;margin:8px 0 0;font-weight:500}
+#time{font-size:52px;font-weight:200;letter-spacing:.02em;margin-top:2px}
+#date{font-size:15px;color:var(--dim)}
+#weather{font-size:15px;margin:10px 0 4px;min-height:22px}
+
+form.row2{display:flex;gap:8px;margin:12px 0}
+input,textarea{flex:1;width:100%;background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:16px;font-family:inherit}
+textarea{min-height:150px;resize:vertical}
+button.b{background:#103559;color:var(--cy);border:1px solid var(--cy2);border-radius:12px;padding:12px 18px;font-size:16px}
+button.b:active{background:#1a4a7a}
+button.ghost{background:none;border:1px solid var(--line);color:var(--dim)}
+
+#log{text-align:left;max-height:230px;overflow-y:auto;padding:4px 2px}
+.you{text-align:right;margin:8px 0}
+.you span{display:inline-block;background:#12304d;border-radius:14px 14px 4px 14px;padding:8px 12px;max-width:85%}
+.jv{margin:8px 0}
+.jv span{display:inline-block;background:var(--panel);border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:8px 12px;max-width:85%}
+#timer{font-size:30px;font-weight:300;min-height:38px;text-align:center;color:var(--cy)}
+
+ul{list-style:none;padding:0;margin:0}
+li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin:7px 0;display:flex;align-items:center;gap:12px}
+li.empty{color:var(--dim);justify-content:center}
+.chk{width:22px;height:22px;border-radius:50%;border:2px solid var(--cy2);flex:none}
+.chk.done{background:var(--cy2);box-shadow:0 0 10px var(--cy2)}
+.grow{flex:1}
+.sub{font-size:13px;color:var(--dim)}
+.x{background:none;border:0;color:var(--dim);font-size:20px;padding:0 4px}
+.hint{font-size:12px;color:var(--dim);margin:2px 0 0}
+.qbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 16px;text-align:center;margin:12px 0}
+.q{font-size:22px;margin-bottom:12px}
+.a{font-size:18px;color:var(--cy);margin:10px 0}
+.btnrow{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:rgba(8,16,30,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:none;border:0;color:var(--dim);padding:10px 0 8px;font-size:11px}
+nav button.on{color:var(--cy)}
+nav b{display:block;font-size:20px;margin-bottom:2px;font-weight:400}
 </style>
 </head>
 <body>
-<h1 id="greeting"></h1>
-<div id="time"></div>
-<div id="date"></div>
-<div id="weather">Checking the weather...</div>
 
-<button id="mic">Talk to Jarvis</button>
-<form id="form">
-  <input id="cmd" placeholder="Or type here, say help for ideas" autocomplete="off">
-  <button type="submit">Send</button>
-</form>
-<div id="log"></div>
-<div id="timer"></div>
+<section id="tab-home" class="on center">
+  <div class="reactor" id="reactor"><div class="ring1"></div><div class="ring2"></div><div class="ring3"></div><div class="core"></div></div>
+  <div class="tap">Tap the reactor and talk</div>
+  <div id="greeting"></div>
+  <div id="time"></div>
+  <div id="date"></div>
+  <div id="weather">Checking the weather...</div>
+  <div id="timer"></div>
+  <div id="log"></div>
+  <form id="form" class="row2">
+    <input id="cmd" placeholder="Or type here. Say help for ideas" autocomplete="off">
+    <button class="b" type="submit">Send</button>
+  </form>
+</section>
 
-<h2>To-do list</h2>
-<ul id="tasks"></ul>
-<div class="hint">Tap a task to check it off.</div>
-<h2>Notes</h2>
-<ul id="notes"></ul>
-<div class="hint">Tap a note to delete it.</div>
+<section id="tab-tasks">
+  <h2>To-do list</h2>
+  <form id="taskForm" class="row2"><input id="taskIn" placeholder="Add a task" autocomplete="off"><button class="b" type="submit">Add</button></form>
+  <ul id="tasks"></ul>
+  <div class="hint">Tap a task to check it off.</div>
+
+  <h2>Due dates</h2>
+  <form id="dueForm" class="row2" style="flex-wrap:wrap">
+    <input id="dueName" placeholder="What is due? (Essay, test...)" autocomplete="off">
+    <input id="dueDate" type="date" style="flex:1">
+    <button class="b" type="submit">Add</button>
+  </form>
+  <ul id="dues"></ul>
+  <div class="hint">Tap a due date to remove it.</div>
+</section>
+
+<section id="tab-notes">
+  <h2>Notes</h2>
+  <form id="noteForm" class="row2"><input id="noteIn" placeholder="Write a note" autocomplete="off"><button class="b" type="submit">Save</button></form>
+  <ul id="notes"></ul>
+  <div class="hint">Tap a note to delete it.</div>
+</section>
+
+<section id="tab-habits">
+  <h2>Habits</h2>
+  <form id="habitForm" class="row2"><input id="habitIn" placeholder="New habit (Read 20 min...)" autocomplete="off"><button class="b" type="submit">Add</button></form>
+  <ul id="habits"></ul>
+  <div class="hint">Tap the circle when you do it today. Keep the streak going.</div>
+</section>
+
+<section id="tab-study">
+  <h2>Study helper</h2>
+  <div id="quizArea"></div>
+  <h2>Your study notes</h2>
+  <textarea id="cardText" placeholder="One per line, like:&#10;Mitochondria: powerhouse of the cell&#10;1776: Declaration of Independence"></textarea>
+  <div class="btnrow">
+    <button class="b" id="saveCards">Save notes</button>
+    <button class="b" id="startQuiz">Quiz me</button>
+  </div>
+  <div class="hint" style="text-align:center;margin-top:8px">Type a question or term, then a colon, then the answer.</div>
+</section>
+
+<nav>
+  <button data-tab="home" class="on"><b>&#9673;</b>Jarvis</button>
+  <button data-tab="tasks"><b>&#10003;</b>Tasks</button>
+  <button data-tab="notes"><b>&#9998;</b>Notes</button>
+  <button data-tab="habits"><b>&#8635;</b>Habits</button>
+  <button data-tab="study"><b>&#10022;</b>Study</button>
+</nav>
 
 <script>
 const $ = id => document.getElementById(id);
+function el(tag, cls, text){ const e = document.createElement(tag); if(cls) e.className = cls; if(text !== undefined) e.textContent = text; return e; }
 
-/* ---------- saved data ---------- */
-function load(k){ try { return JSON.parse(localStorage.getItem(k)) || []; } catch(e){ return []; } }
-function save(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
-let tasks = load("tasks"), notes = load("notes");
+/* ---------- saved data (stays on this phone) ---------- */
+function load(k, fallback){ try { const v = JSON.parse(localStorage.getItem(k)); return v === null ? fallback : v; } catch(e){ return fallback; } }
+function save(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+let tasks  = load("tasks", []);
+let notes  = load("notes", []);
+let habits = load("habits", []);
+let dues   = load("dues", []);
+let cardsText = load("cardsText", "");
 
-function renderList(el, arr, key){
-  el.innerHTML = "";
-  if(!arr.length){ const li=document.createElement("li"); li.className="empty"; li.textContent="Nothing yet"; el.appendChild(li); return; }
-  arr.forEach((t,i)=>{
-    const li=document.createElement("li");
-    li.textContent=t;
-    li.onclick=()=>{ arr.splice(i,1); save(key,arr); render(); };
-    el.appendChild(li);
+/* ---------- dates ---------- */
+function dkey(d){ d = d || new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+function daysUntil(str){
+  const p = str.split("-").map(Number);
+  const a = new Date(p[0], p[1]-1, p[2]), t = new Date();
+  const b = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+  return Math.round((a - b) / 86400000);
+}
+function dueLabel(n){ return n < 0 ? Math.abs(n) + " day" + (n === -1 ? "" : "s") + " overdue" : n === 0 ? "today" : n === 1 ? "tomorrow" : "in " + n + " days"; }
+function dueSpeech(x){ const n = daysUntil(x.d); return x.n + (n < 0 ? " is " : " is due ") + dueLabel(n); }
+function streak(h){
+  let n = 0; const d = new Date();
+  if(!h.d.includes(dkey(d))) d.setDate(d.getDate() - 1);
+  while(h.d.includes(dkey(d))){ n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+
+/* ---------- screens ---------- */
+function show(tab){
+  document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id === "tab-" + tab));
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => show(b.dataset.tab));
+
+/* ---------- lists ---------- */
+function renderTasks(){
+  const ul = $("tasks"); ul.innerHTML = "";
+  if(!tasks.length) ul.appendChild(el("li", "empty", "Nothing to do. Nice."));
+  tasks.forEach((t, i) => {
+    const li = el("li"); li.appendChild(el("span", "chk")); li.appendChild(el("span", "grow", t));
+    li.onclick = () => { tasks.splice(i, 1); save("tasks", tasks); renderAll(); };
+    ul.appendChild(li);
   });
 }
-function render(){ renderList($("tasks"),tasks,"tasks"); renderList($("notes"),notes,"notes"); }
+function renderDues(){
+  const ul = $("dues"); ul.innerHTML = "";
+  if(!dues.length) ul.appendChild(el("li", "empty", "No due dates yet."));
+  dues.slice().sort((a, b) => a.d < b.d ? -1 : 1).forEach(x => {
+    const li = el("li"); const g = el("span", "grow");
+    g.appendChild(el("div", "", x.n)); g.appendChild(el("div", "sub", dueLabel(daysUntil(x.d))));
+    li.appendChild(g);
+    li.onclick = () => { dues = dues.filter(y => y !== x); save("dues", dues); renderAll(); };
+    ul.appendChild(li);
+  });
+}
+function renderNotes(){
+  const ul = $("notes"); ul.innerHTML = "";
+  if(!notes.length) ul.appendChild(el("li", "empty", "No notes yet."));
+  notes.forEach((t, i) => {
+    const li = el("li"); li.appendChild(el("span", "grow", t));
+    li.onclick = () => { notes.splice(i, 1); save("notes", notes); renderAll(); };
+    ul.appendChild(li);
+  });
+}
+function renderHabits(){
+  const ul = $("habits"); ul.innerHTML = "";
+  if(!habits.length) ul.appendChild(el("li", "empty", "No habits yet."));
+  habits.forEach((h, i) => {
+    const li = el("li"); const done = h.d.includes(dkey());
+    const c = el("span", "chk" + (done ? " done" : "")); c.onclick = () => toggleHabit(h);
+    const g = el("span", "grow"); g.appendChild(el("div", "", h.n)); g.appendChild(el("div", "sub", streak(h) + " day streak"));
+    const x = el("button", "x", "\u00d7");
+    x.onclick = () => { if(confirm("Delete " + h.n + "?")){ habits.splice(i, 1); save("habits", habits); renderAll(); } };
+    li.appendChild(c); li.appendChild(g); li.appendChild(x); ul.appendChild(li);
+  });
+}
+function toggleHabit(h){
+  const k = dkey(), i = h.d.indexOf(k);
+  if(i >= 0) h.d.splice(i, 1); else h.d.push(k);
+  save("habits", habits); renderAll();
+}
+function renderAll(){ renderTasks(); renderDues(); renderNotes(); renderHabits(); }
+
+$("taskForm").onsubmit = e => { e.preventDefault(); const v = $("taskIn").value.trim(); if(v){ tasks.push(v); save("tasks", tasks); renderAll(); } $("taskIn").value = ""; };
+$("noteForm").onsubmit = e => { e.preventDefault(); const v = $("noteIn").value.trim(); if(v){ notes.push(v); save("notes", notes); renderAll(); } $("noteIn").value = ""; };
+$("habitForm").onsubmit = e => { e.preventDefault(); const v = $("habitIn").value.trim(); if(v){ habits.push({n: v, d: []}); save("habits", habits); renderAll(); } $("habitIn").value = ""; };
+$("dueForm").onsubmit = e => {
+  e.preventDefault(); const n = $("dueName").value.trim(), d = $("dueDate").value;
+  if(n && d){ dues.push({n: n, d: d}); save("dues", dues); renderAll(); $("dueName").value = ""; $("dueDate").value = ""; }
+};
 
 /* ---------- clock ---------- */
 function getGreeting(){
   const h = new Date().getHours();
   return (h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening") + ", John.";
 }
-function timeText(){ return new Date().toLocaleTimeString([], {hour:"numeric", minute:"2-digit"}); }
-function dateText(){ return new Date().toLocaleDateString([], {weekday:"long", month:"long", day:"numeric"}); }
-function updateClock(){
-  $("greeting").textContent = getGreeting();
-  $("time").textContent = timeText();
-  $("date").textContent = dateText();
-}
+function timeText(){ return new Date().toLocaleTimeString([], {hour: "numeric", minute: "2-digit"}); }
+function dateText(){ return new Date().toLocaleDateString([], {weekday: "long", month: "long", day: "numeric"}); }
+function updateClock(){ $("greeting").textContent = getGreeting(); $("time").textContent = timeText(); $("date").textContent = dateText(); }
 updateClock(); setInterval(updateClock, 1000);
 
 /* ---------- weather ---------- */
@@ -106,25 +266,22 @@ function speak(text){
   speechSynthesis.cancel();
   const voices = speechSynthesis.getVoices();
   const daniels = voices.filter(x => x.name.includes("Daniel"));
-  const v = daniels.find(x => /enhanced|premium/i.test(x.name)) ||
-            daniels[0] ||
-            voices.find(x => x.lang === "en-GB");
+  const v = daniels.find(x => /enhanced|premium/i.test(x.name)) || daniels[0] || voices.find(x => x.lang === "en-GB");
   text.split(/(?<=[.!?])\s+/).forEach(s => {
     const u = new SpeechSynthesisUtterance(s);
-    if (v) u.voice = v;
-    u.lang = "en-GB";
-    u.rate = 0.9;
-    u.pitch = 0.85;
+    if(v) u.voice = v;
+    u.lang = "en-GB"; u.rate = 0.9; u.pitch = 0.85;
     speechSynthesis.speak(u);
   });
 }
+let listening = false;
+setInterval(() => $("reactor").classList.toggle("active", speechSynthesis.speaking || listening), 300);
 
 /* ---------- conversation log ---------- */
 function addLine(who, text){
-  const d = document.createElement("div");
-  d.className = who === "You" ? "you" : "jv";
-  d.textContent = (who === "You" ? "" : "Jarvis: ") + text;
+  const d = el("div", who === "You" ? "you" : "jv"); d.appendChild(el("span", "", text));
   $("log").appendChild(d);
+  while($("log").children.length > 30) $("log").removeChild($("log").firstChild);
   $("log").scrollTop = $("log").scrollHeight;
 }
 function say(text){ addLine("Jarvis", text); speak(text); }
@@ -133,105 +290,153 @@ function say(text){ addLine("Jarvis", text); speak(text); }
 let timerEnd = 0, timerId = null;
 function tick(){
   const left = Math.round((timerEnd - Date.now()) / 1000);
-  if(left <= 0){
-    clearInterval(timerId); timerId = null; $("timer").textContent = "";
-    say("Your timer is done, John.");
+  if(left <= 0){ clearInterval(timerId); timerId = null; $("timer").textContent = ""; say("Your timer is done, John."); return; }
+  const m = Math.floor(left / 60), s = left % 60;
+  $("timer").textContent = m + ":" + (s < 10 ? "0" : "") + s;
+}
+function startTimer(sec){ clearInterval(timerId); timerEnd = Date.now() + sec * 1000; timerId = setInterval(tick, 500); tick(); }
+
+/* ---------- study quiz ---------- */
+function parseCards(text){
+  const out = [];
+  text.split("\n").forEach(line => {
+    const i = line.search(/:| - /); if(i < 0) return;
+    const q = line.slice(0, i).trim(), a = line.slice(i).replace(/^(:| - )\s*/, "").trim();
+    if(q && a) out.push({q: q, a: a});
+  });
+  return out;
+}
+let deck = [], qi = 0, score = 0, missed = [];
+function startQuiz(cards){
+  if(!cards.length){ say("Add some study notes first, with a colon between each question and answer."); show("study"); return false; }
+  deck = cards.slice().sort(() => Math.random() - 0.5); qi = 0; score = 0; missed = [];
+  show("study"); renderQuiz(); return true;
+}
+function renderQuiz(){
+  const box = $("quizArea"); box.innerHTML = "";
+  if(!deck.length){ box.appendChild(el("div", "hint", "Add notes below, then tap Quiz me.")); return; }
+  const card = el("div", "qbox");
+  if(qi >= deck.length){
+    card.appendChild(el("div", "q", "You got " + score + " of " + deck.length + "."));
+    const row = el("div", "btnrow");
+    if(missed.length){ const r = el("button", "b", "Retry missed"); r.onclick = () => startQuiz(missed.slice()); row.appendChild(r); }
+    const a = el("button", "b ghost", "Start over"); a.onclick = () => startQuiz(parseCards(cardsText));
+    row.appendChild(a); card.appendChild(row); box.appendChild(card);
+    speak("You got " + score + " of " + deck.length + (score === deck.length ? ". Perfect." : "."));
     return;
   }
-  const m = Math.floor(left/60), s = left % 60;
-  $("timer").textContent = "Timer " + m + ":" + (s < 10 ? "0" : "") + s;
+  const c = deck[qi];
+  card.appendChild(el("div", "hint", "Question " + (qi + 1) + " of " + deck.length));
+  card.appendChild(el("div", "q", c.q));
+  const ans = el("div", "a", c.a); ans.style.display = "none"; card.appendChild(ans);
+  const row = el("div", "btnrow");
+  const sh = el("button", "b", "Show answer");
+  const got = el("button", "b", "Got it"); const mis = el("button", "b ghost", "Missed it");
+  got.style.display = mis.style.display = "none";
+  sh.onclick = () => { ans.style.display = "block"; sh.style.display = "none"; got.style.display = mis.style.display = ""; speak(c.a); };
+  got.onclick = () => { score++; qi++; renderQuiz(); };
+  mis.onclick = () => { missed.push(c); qi++; renderQuiz(); };
+  const rd = el("button", "b ghost", "Read aloud"); rd.onclick = () => speak(c.q);
+  row.appendChild(sh); row.appendChild(got); row.appendChild(mis); row.appendChild(rd);
+  card.appendChild(row); box.appendChild(card);
+  speak(c.q);
 }
-function startTimer(sec){
-  clearInterval(timerId);
-  timerEnd = Date.now() + sec*1000;
-  timerId = setInterval(tick, 500); tick();
-}
+$("cardText").value = typeof cardsText === "string" ? cardsText : "";
+$("saveCards").onclick = () => { cardsText = $("cardText").value; save("cardsText", cardsText); say("Saved " + parseCards(cardsText).length + " study cards."); };
+$("startQuiz").onclick = () => { cardsText = $("cardText").value; save("cardsText", cardsText); startQuiz(parseCards(cardsText)); };
 
 /* ---------- understanding commands ---------- */
 const nums = {one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,fifteen:15,twenty:20,thirty:30,sixty:60};
-function listWords(arr){ return arr.map((t,i)=>(i+1)+", "+t).join(". "); }
+function listWords(arr){ return arr.map((t, i) => (i + 1) + ", " + t).join(". "); }
+function brief(){
+  const n = tasks.length;
+  const next = dues.slice().sort((a, b) => a.d < b.d ? -1 : 1)[0];
+  let t = getGreeting() + " It is " + timeText() + " on " + dateText() + ". " + weatherText + " ";
+  t += n ? "You have " + n + " thing" + (n === 1 ? "" : "s") + " on your list. " : "Your list is empty. ";
+  if(next) t += dueSpeech(next) + ". ";
+  const left = habits.filter(h => !h.d.includes(dkey())).length;
+  if(left) t += left + " habit" + (left === 1 ? "" : "s") + " still to do today.";
+  return t.trim();
+}
 
 function handle(raw){
   raw = raw.trim(); if(!raw) return;
   addLine("You", raw);
-  let s = raw.toLowerCase().replace(/[.!?,]+$/,"");
-  Object.keys(nums).forEach(w => { s = s.replace(new RegExp("\\b"+w+"\\b","g"), nums[w]); });
+  let s = raw.toLowerCase().replace(/[.!?,]+$/, "");
+  Object.keys(nums).forEach(w => { s = s.replace(new RegExp("\\b" + w + "\\b", "g"), nums[w]); });
   let m;
 
   if(/^(hi|hello|hey|yo)\b/.test(s)) return say(getGreeting() + " How can I help?");
   if(/thank/.test(s)) return say("Any time, John.");
-  if(/\bhelp\b|what can you do/.test(s)) return say("Try: add buy milk to my to-do list. What's on my list. Done with buy milk. Timer for 5 minutes. Note that I like pizza. Read my notes. What time is it. What's the weather. Or say brief me.");
+  if(/\bhelp\b|what can you do/.test(s)) return say("Try: add buy milk to my to-do list. What's on my list. Done with buy milk. Timer for 5 minutes. Note that I like pizza. Add habit read 20 minutes. I did read 20 minutes. What's due. Quiz me. What time is it. Or say brief me.");
 
-  /* timer */
+  if((m = s.match(/^(?:open|go to) (home|tasks?|to[- ]?do|notes|habits|study)/))){
+    const w = m[1]; show(/task|to/.test(w) ? "tasks" : w === "home" ? "home" : w); return say("Opening " + w + ".");
+  }
+  if(/quiz me|study me|start (a )?quiz/.test(s)){ cardsText = $("cardText").value || cardsText; if(startQuiz(parseCards(cardsText))) addLine("Jarvis", "Starting your quiz."); return; }
+
   if((m = s.match(/(\d+) ?(second|minute|hour|sec|min)s?/)) && /timer|remind|countdown/.test(s)){
-    let n = parseInt(m[1],10), unit = m[2][0];
-    const sec = unit === "h" ? n*3600 : unit === "m" ? n*60 : n;
-    startTimer(sec);
-    return say("Timer set for " + n + " " + (unit==="h"?"hour":unit==="m"?"minute":"second") + (n===1?"":"s") + ".");
+    const n = parseInt(m[1], 10), u = m[2][0];
+    startTimer(u === "h" ? n * 3600 : u === "m" ? n * 60 : n);
+    return say("Timer set for " + n + " " + (u === "h" ? "hour" : u === "m" ? "minute" : "second") + (n === 1 ? "" : "s") + ".");
   }
-  if(/(cancel|stop) .*timer/.test(s)){
-    clearInterval(timerId); timerId = null; $("timer").textContent = "";
-    return say("Timer cancelled.");
+  if(/(cancel|stop) .*timer/.test(s)){ clearInterval(timerId); timerId = null; $("timer").textContent = ""; return say("Timer cancelled."); }
+
+  if((m = s.match(/^(?:add|new) habit (.+)$/))){ habits.push({n: m[1], d: []}); save("habits", habits); renderAll(); return say("New habit added: " + m[1] + "."); }
+  if((m = s.match(/^(?:i )?(?:did|practiced|worked on|completed my) (.+)$/))){
+    const h = habits.find(x => x.n.toLowerCase().includes(m[1]) || m[1].includes(x.n.toLowerCase()));
+    if(h){ if(!h.d.includes(dkey())){ h.d.push(dkey()); save("habits", habits); renderAll(); } return say("Logged. " + h.n + " is at a " + streak(h) + " day streak."); }
+  }
+  if(/habit|streak/.test(s) && /(how|what|read|show|tell)/.test(s)){
+    return say(habits.length ? habits.map(h => h.n + ": " + streak(h) + " day streak" + (h.d.includes(dkey()) ? ", done today" : ", not done yet")).join(". ") : "You have no habits yet.");
   }
 
-  /* to-do list */
+  if(/what'?s due|what is due|what'?s coming up|deadlines?/.test(s)){
+    const sorted = dues.slice().sort((a, b) => a.d < b.d ? -1 : 1);
+    return say(sorted.length ? sorted.map(dueSpeech).join(". ") : "Nothing is due. Enjoy it.");
+  }
+
   if((m = s.match(/^(?:add|put) (.+?) (?:to|on) (?:my |the )?(?:to[- ]?do|task|tasks)(?: list)?$/)) ||
      (m = s.match(/^(?:add task|add a task|new task|remind me to|i need to) (.+)$/))){
-    tasks.push(m[1]); save("tasks",tasks); render();
-    return say("Added " + m[1] + " to your list.");
+    tasks.push(m[1]); save("tasks", tasks); renderAll(); return say("Added " + m[1] + " to your list.");
   }
   if((m = s.match(/^(?:done with|finished|finish|complete|check off|remove|delete) (.+)$/))){
     const i = tasks.findIndex(t => t.toLowerCase().includes(m[1]));
-    if(i >= 0){ const t = tasks.splice(i,1)[0]; save("tasks",tasks); render(); return say("Nice work. Checked off " + t + "."); }
+    if(i >= 0){ const t = tasks.splice(i, 1)[0]; save("tasks", tasks); renderAll(); return say("Nice work. Checked off " + t + "."); }
     return say("I couldn't find " + m[1] + " on your list.");
   }
-  if(/clear (my |the )?(to[- ]?do|tasks|list)/.test(s)){
-    tasks = []; save("tasks",tasks); render(); return say("Your list is cleared.");
-  }
+  if(/clear (my |the )?(to[- ]?do|tasks|list)/.test(s)){ tasks = []; save("tasks", tasks); renderAll(); return say("Your list is cleared."); }
   if(/(what|read|show|tell).*(list|tasks|to[- ]?do)/.test(s)){
-    return say(tasks.length ? "You have " + tasks.length + " things on your list. " + listWords(tasks) : "Your list is empty. Nice.");
+    return say(tasks.length ? "You have " + tasks.length + " thing" + (tasks.length === 1 ? "" : "s") + " on your list. " + listWords(tasks) : "Your list is empty. Nice.");
   }
 
-  /* notes */
-  if(/clear (my |the )?notes/.test(s)){ notes = []; save("notes",notes); render(); return say("Notes cleared."); }
-  if(/(read|show|what).*notes/.test(s)){
-    return say(notes.length ? listWords(notes) : "You have no notes yet.");
-  }
-  if((m = s.match(/^(?:take a note|make a note|note|remember)(?: that)? (.+)$/))){
-    notes.push(m[1]); save("notes",notes); render();
-    return say("Noted.");
-  }
+  if(/clear (my |the )?notes/.test(s)){ notes = []; save("notes", notes); renderAll(); return say("Notes cleared."); }
+  if(/(read|show|what).*notes/.test(s)){ return say(notes.length ? listWords(notes) : "You have no notes yet."); }
+  if((m = s.match(/^(?:take a note|make a note|note|remember)(?: that)? (.+)$/))){ notes.push(m[1]); save("notes", notes); renderAll(); return say("Noted."); }
 
-  /* info */
   if(/what.*time|current time/.test(s)) return say("It is " + timeText() + ".");
   if(/what.*(date|day)|today'?s date/.test(s)) return say("Today is " + dateText() + ".");
   if(/weather|temperature|outside/.test(s)) return say(weatherText || "I don't have the weather yet.");
-  if(/brief|good (morning|afternoon|evening)|catch me up/.test(s)){
-    const n = tasks.length;
-    return say(getGreeting() + " It is " + timeText() + " on " + dateText() + ". " + weatherText + " " +
-      (n ? "You have " + n + " thing" + (n===1?"":"s") + " on your list." : "Your list is empty."));
-  }
+  if(/brief|good (morning|afternoon|evening)|catch me up/.test(s)) return say(brief());
 
   say("Sorry, I didn't catch that. Say help to hear what I can do.");
 }
 
 /* ---------- inputs ---------- */
 $("form").onsubmit = e => { e.preventDefault(); const v = $("cmd").value; $("cmd").value = ""; handle(v); };
-
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-$("mic").onclick = () => {
+$("reactor").onclick = () => {
   if(!SR){ say("Voice input isn't available here. Type your command instead."); return; }
   speechSynthesis.cancel();
-  const r = new SR();
-  r.lang = "en-US";
+  const r = new SR(); r.lang = "en-US";
+  r.onstart = () => { listening = true; };
+  r.onend = () => { listening = false; };
   r.onresult = e => handle(e.results[0][0].transcript);
-  r.onerror = () => addLine("Jarvis", "I didn't catch that. You can also type.");
+  r.onerror = () => { listening = false; addLine("Jarvis", "I didn't catch that. You can also type."); };
   r.start();
 };
 
-render();
-loadWeather();
+renderAll(); renderQuiz(); loadWeather();
 </script>
 </body>
 </html>
-
