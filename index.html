@@ -6,12 +6,24 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Jarvis</title>
 <style>
-body{background:#0b1220;color:#7fdbff;font-family:-apple-system,sans-serif;margin:0;padding:24px;text-align:center;min-height:100vh}
-h1{margin-top:40px;font-size:28px}
-#time{font-size:56px;font-weight:600;margin-top:20px}
-#date{font-size:20px;opacity:.8;margin-bottom:10px}
-#weather{font-size:22px;margin:24px 0;min-height:60px}
-button{background:#12304d;color:#7fdbff;border:1px solid #7fdbff;border-radius:14px;padding:16px 28px;font-size:18px}
+body{background:#0b1220;color:#7fdbff;font-family:-apple-system,sans-serif;margin:0;padding:20px;text-align:center}
+h1{margin:20px 0 0;font-size:26px}
+#time{font-size:48px;font-weight:600;margin-top:8px}
+#date{font-size:18px;opacity:.8}
+#weather{font-size:17px;margin:12px 0 16px;min-height:24px}
+button{background:#12304d;color:#7fdbff;border:1px solid #7fdbff;border-radius:14px;padding:14px 22px;font-size:17px}
+#mic{font-size:20px;padding:16px 34px}
+form{display:flex;gap:8px;margin:14px 0}
+input{flex:1;background:#0f1a2e;color:#7fdbff;border:1px solid #2a4a6b;border-radius:12px;padding:12px;font-size:16px}
+#log{text-align:left;max-height:220px;overflow-y:auto;margin:10px 0;padding:6px}
+.you{color:#fff;margin:6px 0;text-align:right}
+.jv{margin:6px 0}
+#timer{font-size:32px;font-weight:600;min-height:40px;margin:8px 0}
+h2{font-size:18px;margin:22px 0 6px;text-align:left}
+ul{list-style:none;padding:0;margin:0;text-align:left}
+li{background:#0f1a2e;border:1px solid #1d3550;border-radius:10px;padding:10px 12px;margin:6px 0}
+li.empty{opacity:.5}
+.hint{font-size:13px;opacity:.6;text-align:left}
 </style>
 </head>
 <body>
@@ -19,37 +31,62 @@ button{background:#12304d;color:#7fdbff;border:1px solid #7fdbff;border-radius:1
 <div id="time"></div>
 <div id="date"></div>
 <div id="weather">Checking the weather...</div>
-<button id="brief">Brief me</button>
+
+<button id="mic">Talk to Jarvis</button>
+<form id="form">
+  <input id="cmd" placeholder="Or type here, say help for ideas" autocomplete="off">
+  <button type="submit">Send</button>
+</form>
+<div id="log"></div>
+<div id="timer"></div>
+
+<h2>To-do list</h2>
+<ul id="tasks"></ul>
+<div class="hint">Tap a task to check it off.</div>
+<h2>Notes</h2>
+<ul id="notes"></ul>
+<div class="hint">Tap a note to delete it.</div>
+
 <script>
+const $ = id => document.getElementById(id);
+
+/* ---------- saved data ---------- */
+function load(k){ try { return JSON.parse(localStorage.getItem(k)) || []; } catch(e){ return []; } }
+function save(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+let tasks = load("tasks"), notes = load("notes");
+
+function renderList(el, arr, key){
+  el.innerHTML = "";
+  if(!arr.length){ const li=document.createElement("li"); li.className="empty"; li.textContent="Nothing yet"; el.appendChild(li); return; }
+  arr.forEach((t,i)=>{
+    const li=document.createElement("li");
+    li.textContent=t;
+    li.onclick=()=>{ arr.splice(i,1); save(key,arr); render(); };
+    el.appendChild(li);
+  });
+}
+function render(){ renderList($("tasks"),tasks,"tasks"); renderList($("notes"),notes,"notes"); }
+
+/* ---------- clock ---------- */
 function getGreeting(){
   const h = new Date().getHours();
-  const part = h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
-  return part + ", John.";
+  return (h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening") + ", John.";
 }
-function timeText(){
-  return new Date().toLocaleTimeString([], {hour:"numeric", minute:"2-digit"});
-}
-function dateText(){
-  return new Date().toLocaleDateString([], {weekday:"long", month:"long", day:"numeric"});
-}
+function timeText(){ return new Date().toLocaleTimeString([], {hour:"numeric", minute:"2-digit"}); }
+function dateText(){ return new Date().toLocaleDateString([], {weekday:"long", month:"long", day:"numeric"}); }
 function updateClock(){
-  document.getElementById("greeting").textContent = getGreeting();
-  document.getElementById("time").textContent = timeText();
-  document.getElementById("date").textContent = dateText();
+  $("greeting").textContent = getGreeting();
+  $("time").textContent = timeText();
+  $("date").textContent = dateText();
 }
-updateClock();
-setInterval(updateClock, 1000);
+updateClock(); setInterval(updateClock, 1000);
 
+/* ---------- weather ---------- */
 let weatherText = "";
 const codes = {0:"clear",1:"mostly clear",2:"partly cloudy",3:"overcast",45:"foggy",48:"foggy",
 51:"light drizzle",53:"drizzle",55:"heavy drizzle",61:"light rain",63:"rain",65:"heavy rain",
 71:"light snow",73:"snow",75:"heavy snow",80:"rain showers",81:"rain showers",82:"heavy showers",95:"thunderstorms"};
-
-function showWeather(t){
-  weatherText = t;
-  document.getElementById("weather").textContent = t;
-}
-
+function showWeather(t){ weatherText = t; $("weather").textContent = t; }
 function loadWeather(){
   if(!navigator.geolocation){ showWeather("This phone can't share its location."); return; }
   navigator.geolocation.getCurrentPosition(async p => {
@@ -60,12 +97,11 @@ function loadWeather(){
       const t = Math.round(d.current.temperature_2m);
       const c = codes[d.current.weather_code] || "mixed conditions";
       showWeather("It is " + t + " degrees and " + c + " right now.");
-    } catch(e){
-      showWeather("I couldn't get the weather.");
-    }
+    } catch(e){ showWeather("I couldn't get the weather."); }
   }, () => showWeather("Location is off, so I can't check the weather."));
 }
 
+/* ---------- voice out ---------- */
 function speak(text){
   speechSynthesis.cancel();
   const voices = speechSynthesis.getVoices();
@@ -83,10 +119,119 @@ function speak(text){
   });
 }
 
-document.getElementById("brief").onclick = () => {
-  speak(getGreeting() + " It is " + timeText() + " on " + dateText() + ". " + weatherText);
+/* ---------- conversation log ---------- */
+function addLine(who, text){
+  const d = document.createElement("div");
+  d.className = who === "You" ? "you" : "jv";
+  d.textContent = (who === "You" ? "" : "Jarvis: ") + text;
+  $("log").appendChild(d);
+  $("log").scrollTop = $("log").scrollHeight;
+}
+function say(text){ addLine("Jarvis", text); speak(text); }
+
+/* ---------- timer ---------- */
+let timerEnd = 0, timerId = null;
+function tick(){
+  const left = Math.round((timerEnd - Date.now()) / 1000);
+  if(left <= 0){
+    clearInterval(timerId); timerId = null; $("timer").textContent = "";
+    say("Your timer is done, John.");
+    return;
+  }
+  const m = Math.floor(left/60), s = left % 60;
+  $("timer").textContent = "Timer " + m + ":" + (s < 10 ? "0" : "") + s;
+}
+function startTimer(sec){
+  clearInterval(timerId);
+  timerEnd = Date.now() + sec*1000;
+  timerId = setInterval(tick, 500); tick();
+}
+
+/* ---------- understanding commands ---------- */
+const nums = {one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,fifteen:15,twenty:20,thirty:30,sixty:60};
+function listWords(arr){ return arr.map((t,i)=>(i+1)+", "+t).join(". "); }
+
+function handle(raw){
+  raw = raw.trim(); if(!raw) return;
+  addLine("You", raw);
+  let s = raw.toLowerCase().replace(/[.!?,]+$/,"");
+  Object.keys(nums).forEach(w => { s = s.replace(new RegExp("\\b"+w+"\\b","g"), nums[w]); });
+  let m;
+
+  if(/^(hi|hello|hey|yo)\b/.test(s)) return say(getGreeting() + " How can I help?");
+  if(/thank/.test(s)) return say("Any time, John.");
+  if(/\bhelp\b|what can you do/.test(s)) return say("Try: add buy milk to my to-do list. What's on my list. Done with buy milk. Timer for 5 minutes. Note that I like pizza. Read my notes. What time is it. What's the weather. Or say brief me.");
+
+  /* timer */
+  if((m = s.match(/(\d+) ?(second|minute|hour|sec|min)s?/)) && /timer|remind|countdown/.test(s)){
+    let n = parseInt(m[1],10), unit = m[2][0];
+    const sec = unit === "h" ? n*3600 : unit === "m" ? n*60 : n;
+    startTimer(sec);
+    return say("Timer set for " + n + " " + (unit==="h"?"hour":unit==="m"?"minute":"second") + (n===1?"":"s") + ".");
+  }
+  if(/(cancel|stop) .*timer/.test(s)){
+    clearInterval(timerId); timerId = null; $("timer").textContent = "";
+    return say("Timer cancelled.");
+  }
+
+  /* to-do list */
+  if((m = s.match(/^(?:add|put) (.+?) (?:to|on) (?:my |the )?(?:to[- ]?do|task|tasks)(?: list)?$/)) ||
+     (m = s.match(/^(?:add task|add a task|new task|remind me to|i need to) (.+)$/))){
+    tasks.push(m[1]); save("tasks",tasks); render();
+    return say("Added " + m[1] + " to your list.");
+  }
+  if((m = s.match(/^(?:done with|finished|finish|complete|check off|remove|delete) (.+)$/))){
+    const i = tasks.findIndex(t => t.toLowerCase().includes(m[1]));
+    if(i >= 0){ const t = tasks.splice(i,1)[0]; save("tasks",tasks); render(); return say("Nice work. Checked off " + t + "."); }
+    return say("I couldn't find " + m[1] + " on your list.");
+  }
+  if(/clear (my |the )?(to[- ]?do|tasks|list)/.test(s)){
+    tasks = []; save("tasks",tasks); render(); return say("Your list is cleared.");
+  }
+  if(/(what|read|show|tell).*(list|tasks|to[- ]?do)/.test(s)){
+    return say(tasks.length ? "You have " + tasks.length + " things on your list. " + listWords(tasks) : "Your list is empty. Nice.");
+  }
+
+  /* notes */
+  if(/clear (my |the )?notes/.test(s)){ notes = []; save("notes",notes); render(); return say("Notes cleared."); }
+  if(/(read|show|what).*notes/.test(s)){
+    return say(notes.length ? listWords(notes) : "You have no notes yet.");
+  }
+  if((m = s.match(/^(?:take a note|make a note|note|remember)(?: that)? (.+)$/))){
+    notes.push(m[1]); save("notes",notes); render();
+    return say("Noted.");
+  }
+
+  /* info */
+  if(/what.*time|current time/.test(s)) return say("It is " + timeText() + ".");
+  if(/what.*(date|day)|today'?s date/.test(s)) return say("Today is " + dateText() + ".");
+  if(/weather|temperature|outside/.test(s)) return say(weatherText || "I don't have the weather yet.");
+  if(/brief|good (morning|afternoon|evening)|catch me up/.test(s)){
+    const n = tasks.length;
+    return say(getGreeting() + " It is " + timeText() + " on " + dateText() + ". " + weatherText + " " +
+      (n ? "You have " + n + " thing" + (n===1?"":"s") + " on your list." : "Your list is empty."));
+  }
+
+  say("Sorry, I didn't catch that. Say help to hear what I can do.");
+}
+
+/* ---------- inputs ---------- */
+$("form").onsubmit = e => { e.preventDefault(); const v = $("cmd").value; $("cmd").value = ""; handle(v); };
+
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+$("mic").onclick = () => {
+  if(!SR){ say("Voice input isn't available here. Type your command instead."); return; }
+  speechSynthesis.cancel();
+  const r = new SR();
+  r.lang = "en-US";
+  r.onresult = e => handle(e.results[0][0].transcript);
+  r.onerror = () => addLine("Jarvis", "I didn't catch that. You can also type.");
+  r.start();
 };
+
+render();
 loadWeather();
 </script>
 </body>
 </html>
+
