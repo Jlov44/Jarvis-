@@ -68,13 +68,18 @@ function loadWeather(){
 
 function speak(text){
   speechSynthesis.cancel();
-  speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+  const voices = speechSynthesis.getVoices();
+  const daniels = voices.filter(x => x.name.includes("Daniel"));
+  const v = daniels.find(x => /enhanced|premium/i.test(x.name)) ||
+            daniels[0] ||
+            voices.find(x => x.lang === "en-GB");
+  text.split(/(?<=[.!?])\s+/).forEach(s => {
+    const u = new SpeechSynthesisUtterance(s);
+    if (v) u.voice = v;
+    u.lang = "en-GB";
+    u.rate = 0.9;
+    u.pitch = 0.85;
+    speechSynthesis.speak(u);
+  });
 }
 
-document.getElementById("brief").onclick = () => {
-  speak(getGreeting() + " It is " + timeText() + " on " + dateText() + ". " + weatherText);
-};
-loadWeather();
-</script>
-</body>
-</html>
