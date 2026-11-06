@@ -1,15 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>Jarvis</title>
-  <style>
-    body { background:#0b1220; color:#7fdbff; font-family:-apple-system,sans-serif;
-           display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Jarvis</title>
+<style>
+body{background:#0b1220;color:#7fdbff;font-family:-apple-system,sans-serif;margin:0;padding:24px;text-align:center;min-height:100vh}
+h1{margin-top:60px;font-size:28px}
+#weather{font-size:22px;margin:24px 0;min-height:60px}
+button{background:#12304d;color:#7fdbff;border:1px solid #7fdbff;border-radius:14px;padding:16px 28px;font-size:18px}
+</style>
 </head>
 <body>
-  <h1>Hello, John. Jarvis online.</h1>
+<h1 id="greeting"></h1>
+<div id="weather">Checking the weather...</div>
+<button id="brief">Brief me</button>
+<script>
+const h = new Date().getHours();
+const part = h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+const greeting = part + ", John.";
+document.getElementById("greeting").textContent = greeting;
+
+let weatherText = "";
+const codes = {0:"clear",1:"mostly clear",2:"partly cloudy",3:"overcast",45:"foggy",48:"foggy",
+51:"light drizzle",53:"drizzle",55:"heavy drizzle",61:"light rain",63:"rain",65:"heavy rain",
+71:"light snow",73:"snow",75:"heavy snow",80:"rain showers",81:"rain showers",82:"heavy showers",95:"thunderstorms"};
+
+function showWeather(t){
+  weatherText = t;
+  document.getElementById("weather").textContent = t;
+}
+
+function loadWeather(){
+  if(!navigator.geolocation){ showWeather("This phone can't share its location."); return; }
+  navigator.geolocation.getCurrentPosition(async p => {
+    try {
+      const url = "https://api.open-meteo.com/v1/forecast?latitude=" + p.coords.latitude +
+        "&longitude=" + p.coords.longitude + "&current=temperature_2m,weather_code&temperature_unit=fahrenheit";
+      const d = await (await fetch(url)).json();
+      const t = Math.round(d.current.temperature_2m);
+      const c = codes[d.current.weather_code] || "mixed conditions";
+      showWeather("It is " + t + " degrees and " + c + " right now.");
+    } catch(e){
+      showWeather("I couldn't get the weather.");
+    }
+  }, () => showWeather("Location is off, so I can't check the weather."));
+}
+
+function speak(text){
+  speechSynthesis.cancel();
+  speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+}
+
+document.getElementById("brief").onclick = () => speak(greeting + " " + weatherText);
+loadWeather();
+</script>
 </body>
 </html>
