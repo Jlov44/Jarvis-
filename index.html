@@ -18,36 +18,42 @@ h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)
 .center{text-align:center}
 
 /* reactor */
-.reactor{position:relative;width:180px;height:180px;margin:6px auto 4px;cursor:pointer}
+.reactor{position:relative;width:170px;height:170px;margin:4px auto 2px;cursor:pointer}
 .reactor div{position:absolute;border-radius:50%}
 .ring1{inset:0;border:2px solid rgba(127,219,255,.5);box-shadow:0 0 24px rgba(43,184,255,.45),inset 0 0 24px rgba(43,184,255,.25)}
-.ring2{inset:16px;border:3px dashed rgba(127,219,255,.7);animation:spin 18s linear infinite}
-.ring3{inset:38px;border:2px solid rgba(127,219,255,.8);box-shadow:0 0 16px rgba(43,184,255,.6)}
-.core{inset:62px;background:radial-gradient(circle,#fff 0,#bdf0ff 35%,#2bb8ff 75%,#0a5a8a 100%);box-shadow:0 0 40px 10px rgba(43,184,255,.7);animation:pulse 3s ease-in-out infinite}
+.ring2{inset:15px;border:3px dashed rgba(127,219,255,.7);animation:spin 18s linear infinite}
+.ring3{inset:36px;border:2px solid rgba(127,219,255,.8);box-shadow:0 0 16px rgba(43,184,255,.6)}
+.core{inset:58px;background:radial-gradient(circle,#fff 0,#bdf0ff 35%,#2bb8ff 75%,#0a5a8a 100%);box-shadow:0 0 40px 10px rgba(43,184,255,.7);animation:pulse 3s ease-in-out infinite}
 .reactor.active .ring2{animation-duration:3s}
 .reactor.active .core{animation-duration:.8s}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{50%{transform:scale(1.12);box-shadow:0 0 60px 18px rgba(43,184,255,.9)}}
-.tap{font-size:12px;color:var(--dim);margin-bottom:6px}
+.tap{font-size:12px;color:var(--dim)}
+#status{min-height:20px;font-size:14px;color:var(--cy);margin:2px 0 4px}
 
-#greeting{font-size:20px;margin:8px 0 0;font-weight:500}
-#time{font-size:52px;font-weight:200;letter-spacing:.02em;margin-top:2px}
+#greeting{font-size:20px;margin:4px 0 0;font-weight:500}
+#time{font-size:50px;font-weight:200;letter-spacing:.02em;margin-top:2px}
 #date{font-size:15px;color:var(--dim)}
-#weather{font-size:15px;margin:10px 0 4px;min-height:22px}
+#weather{font-size:14px;margin:8px 0 2px;min-height:20px}
 
-form.row2{display:flex;gap:8px;margin:12px 0}
-input,textarea{flex:1;width:100%;background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:16px;font-family:inherit}
+form.row2{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
+input,textarea{flex:1;min-width:0;width:100%;background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:16px;font-family:inherit}
+form.row2 input{width:auto}
 textarea{min-height:150px;resize:vertical}
 button.b{background:#103559;color:var(--cy);border:1px solid var(--cy2);border-radius:12px;padding:12px 18px;font-size:16px}
 button.b:active{background:#1a4a7a}
 button.ghost{background:none;border:1px solid var(--line);color:var(--dim)}
 
-#log{text-align:left;max-height:230px;overflow-y:auto;padding:4px 2px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:6px 0;-webkit-overflow-scrolling:touch}
+.chip{flex:none;background:var(--panel);border:1px solid var(--line);color:var(--cy);border-radius:999px;padding:8px 14px;font-size:14px}
+
+#log{text-align:left;max-height:210px;overflow-y:auto;padding:4px 2px}
 .you{text-align:right;margin:8px 0}
 .you span{display:inline-block;background:#12304d;border-radius:14px 14px 4px 14px;padding:8px 12px;max-width:85%}
 .jv{margin:8px 0}
-.jv span{display:inline-block;background:var(--panel);border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:8px 12px;max-width:85%}
-#timer{font-size:30px;font-weight:300;min-height:38px;text-align:center;color:var(--cy)}
+.jv span,.jv a{display:inline-block;background:var(--panel);border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:8px 12px;max-width:85%}
+.jv a{color:var(--cy);text-decoration:none}
+#timer{font-size:28px;font-weight:300;min-height:34px;text-align:center;color:var(--cy)}
 
 ul{list-style:none;padding:0;margin:0}
 li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin:7px 0;display:flex;align-items:center;gap:12px}
@@ -56,6 +62,7 @@ li.empty{color:var(--dim);justify-content:center}
 .chk.done{background:var(--cy2);box-shadow:0 0 10px var(--cy2)}
 .grow{flex:1}
 .sub{font-size:13px;color:var(--dim)}
+.late{color:#ff8a8a}
 .x{background:none;border:0;color:var(--dim);font-size:20px;padding:0 4px}
 .hint{font-size:12px;color:var(--dim);margin:2px 0 0}
 .qbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 16px;text-align:center;margin:12px 0}
@@ -63,43 +70,71 @@ li.empty{color:var(--dim);justify-content:center}
 .a{font-size:18px;color:var(--cy);margin:10px 0}
 .btnrow{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
 
+/* calendar */
+.calhead{display:flex;align-items:center;justify-content:space-between;margin:6px 0 10px}
+.calhead .t{font-size:18px;font-weight:500}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.dow{font-size:11px;color:var(--dim);text-align:center;padding:4px 0}
+.day{aspect-ratio:1;background:var(--panel);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px}
+.day.blank{background:none;border:0}
+.day.today{border-color:var(--cy2);box-shadow:0 0 8px rgba(43,184,255,.5)}
+.day.sel{background:#103559}
+.dots{display:flex;gap:2px;margin-top:3px;height:5px}
+.dots i{width:5px;height:5px;border-radius:50%;background:var(--cy)}
+
 nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:rgba(8,16,30,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
-nav button{flex:1;background:none;border:0;color:var(--dim);padding:10px 0 8px;font-size:11px}
+nav button{flex:1;background:none;border:0;color:var(--dim);padding:10px 0 8px;font-size:10px}
 nav button.on{color:var(--cy)}
-nav b{display:block;font-size:20px;margin-bottom:2px;font-weight:400}
+nav b{display:block;font-size:19px;margin-bottom:2px;font-weight:400}
 </style>
 </head>
 <body>
 
 <section id="tab-home" class="on center">
   <div class="reactor" id="reactor"><div class="ring1"></div><div class="ring2"></div><div class="ring3"></div><div class="core"></div></div>
-  <div class="tap">Tap the reactor and talk</div>
+  <div class="tap">Tap the reactor, talk, and pause. Tap again to send right away.</div>
+  <div id="status"></div>
   <div id="greeting"></div>
   <div id="time"></div>
   <div id="date"></div>
   <div id="weather">Checking the weather...</div>
   <div id="timer"></div>
   <div id="log"></div>
-  <form id="form" class="row2">
-    <input id="cmd" placeholder="Or type here. Say help for ideas" autocomplete="off">
+  <div class="chips" id="chips"></div>
+  <form id="form" class="row2" style="flex-wrap:nowrap">
+    <input id="cmd" placeholder="Or type to Jarvis here" autocomplete="off">
     <button class="b" type="submit">Send</button>
   </form>
 </section>
 
 <section id="tab-tasks">
   <h2>To-do list</h2>
-  <form id="taskForm" class="row2"><input id="taskIn" placeholder="Add a task" autocomplete="off"><button class="b" type="submit">Add</button></form>
-  <ul id="tasks"></ul>
-  <div class="hint">Tap a task to check it off.</div>
-
-  <h2>Due dates</h2>
-  <form id="dueForm" class="row2" style="flex-wrap:wrap">
-    <input id="dueName" placeholder="What is due? (Essay, test...)" autocomplete="off">
-    <input id="dueDate" type="date" style="flex:1">
+  <form id="taskForm" class="row2">
+    <input id="taskIn" placeholder="Add a task" autocomplete="off">
+    <input id="taskDate" type="date" style="flex:0 0 150px">
     <button class="b" type="submit">Add</button>
   </form>
-  <ul id="dues"></ul>
-  <div class="hint">Tap a due date to remove it.</div>
+  <ul id="tasks"></ul>
+  <div class="hint">Add a date to put it on your calendar. Tap a task to check it off.</div>
+
+  <h2>Import from Google Classroom</h2>
+  <textarea id="gcText" placeholder="Paste your Classroom assignments here" style="min-height:110px"></textarea>
+  <div class="btnrow"><button class="b" id="gcImport">Import to my calendar</button></div>
+  <div class="hint" id="gcMsg" style="text-align:center;margin-top:8px">In Classroom, open the To-do page, select the assignments text, copy it, and paste it here. I find the due dates for you.</div>
+</section>
+
+<section id="tab-calendar">
+  <h2>Calendar</h2>
+  <div class="calhead">
+    <button class="b ghost" id="calPrev">&lsaquo;</button>
+    <div class="t" id="calTitle"></div>
+    <button class="b ghost" id="calNext">&rsaquo;</button>
+  </div>
+  <div class="cal" id="calGrid"></div>
+  <div class="btnrow"><button class="b ghost" id="calToday">Today</button></div>
+  <h2 id="calDayTitle"></h2>
+  <ul id="calDay"></ul>
+  <form id="calForm" class="row2"><input id="calIn" placeholder="Add something to this day" autocomplete="off"><button class="b" type="submit">Add</button></form>
 </section>
 
 <section id="tab-notes">
@@ -131,6 +166,7 @@ nav b{display:block;font-size:20px;margin-bottom:2px;font-weight:400}
 <nav>
   <button data-tab="home" class="on"><b>&#9673;</b>Jarvis</button>
   <button data-tab="tasks"><b>&#10003;</b>Tasks</button>
+  <button data-tab="calendar"><b>&#9638;</b>Calendar</button>
   <button data-tab="notes"><b>&#9998;</b>Notes</button>
   <button data-tab="habits"><b>&#8635;</b>Habits</button>
   <button data-tab="study"><b>&#10022;</b>Study</button>
@@ -139,31 +175,80 @@ nav b{display:block;font-size:20px;margin-bottom:2px;font-weight:400}
 <script>
 const $ = id => document.getElementById(id);
 function el(tag, cls, text){ const e = document.createElement(tag); if(cls) e.className = cls; if(text !== undefined) e.textContent = text; return e; }
+function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+function pad(n){ return String(n).padStart(2, "0"); }
+function cap(t){ return t ? t.charAt(0).toUpperCase() + t.slice(1) : t; }
 
 /* ---------- saved data (stays on this phone) ---------- */
 function load(k, fallback){ try { const v = JSON.parse(localStorage.getItem(k)); return v === null ? fallback : v; } catch(e){ return fallback; } }
 function save(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
-let tasks  = load("tasks", []);
-let notes  = load("notes", []);
+let tasks = load("tasks", []).map(x => typeof x === "string" ? {t: x, d: ""} : x);
+const oldDues = load("dues", []);
+if(oldDues.length){ oldDues.forEach(x => tasks.push({t: x.n, d: x.d})); save("tasks", tasks); try { localStorage.removeItem("dues"); } catch(e){} }
+let notes = load("notes", []);
 let habits = load("habits", []);
-let dues   = load("dues", []);
 let cardsText = load("cardsText", "");
+let doneLog = load("doneLog", []);
+let userName = load("name", "John");
 
 /* ---------- dates ---------- */
-function dkey(d){ d = d || new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
-function daysUntil(str){
-  const p = str.split("-").map(Number);
-  const a = new Date(p[0], p[1]-1, p[2]), t = new Date();
-  const b = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+function dkey(d){ d = d || new Date(); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+function keyToDate(k){ const p = k.split("-").map(Number); return new Date(p[0], p[1] - 1, p[2], 12); }
+function daysUntil(k){
+  const a = keyToDate(k), t = new Date();
+  const b = new Date(t.getFullYear(), t.getMonth(), t.getDate(), 12);
   return Math.round((a - b) / 86400000);
 }
+function addDays(n){ const d = new Date(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() + n); return dkey(d); }
 function dueLabel(n){ return n < 0 ? Math.abs(n) + " day" + (n === -1 ? "" : "s") + " overdue" : n === 0 ? "today" : n === 1 ? "tomorrow" : "in " + n + " days"; }
-function dueSpeech(x){ const n = daysUntil(x.d); return x.n + (n < 0 ? " is " : " is due ") + dueLabel(n); }
+function dateWords(k){
+  const n = daysUntil(k);
+  if(n === 0) return "today"; if(n === 1) return "tomorrow"; if(n === -1) return "yesterday";
+  return keyToDate(k).toLocaleDateString([], {weekday: "long", month: "long", day: "numeric"});
+}
 function streak(h){
   let n = 0; const d = new Date();
   if(!h.d.includes(dkey(d))) d.setDate(d.getDate() - 1);
   while(h.d.includes(dkey(d))){ n++; d.setDate(d.getDate() - 1); }
   return n;
+}
+
+const WD = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+const MO = ["january","february","march","april","may","june","july","august","september","october","november","december"];
+function parseDate(s){
+  const pre = "(?:(?:due|for|on|by|before|until|this|next) )?";
+  let m, key = null;
+  if((m = s.match(new RegExp("\\b" + pre + "(?:today|tonight)\\b")))) key = addDays(0);
+  else if((m = s.match(new RegExp("\\b" + pre + "tomorrow\\b")))) key = addDays(1);
+  else if((m = s.match(new RegExp("\\b" + pre + "(sunday|monday|tuesday|wednesday|thursday|friday|saturday)\\b")))){
+    let diff = (WD.indexOf(m[1]) - new Date().getDay() + 7) % 7; if(diff === 0) diff = 7; key = addDays(diff);
+  }
+  else if((m = s.match(/\bin (\d+) days?\b/))) key = addDays(+m[1]);
+  else if((m = s.match(/\bin (\d+) weeks?\b/))) key = addDays(7 * +m[1]);
+  else if((m = s.match(new RegExp("\\b" + pre + "(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]* (\\d{1,2})(?:st|nd|rd|th)?\\b")))){
+    const mi = MO.findIndex(x => x.startsWith(m[1])), day = +m[2];
+    if(day >= 1 && day <= 31){
+      const now = new Date(); let dt = new Date(now.getFullYear(), mi, day, 12);
+      if(dt < new Date(now.getFullYear(), now.getMonth(), now.getDate())) dt = new Date(now.getFullYear() + 1, mi, day, 12);
+      key = dkey(dt);
+    }
+  }
+  else if((m = s.match(new RegExp("\\b" + pre + "(\\d{1,2})\\/(\\d{1,2})\\b")))){
+    const mo = +m[1], day = +m[2];
+    if(mo >= 1 && mo <= 12 && day >= 1 && day <= 31){
+      const now = new Date(); let dt = new Date(now.getFullYear(), mo - 1, day, 12);
+      if(dt < new Date(now.getFullYear(), now.getMonth(), now.getDate())) dt = new Date(now.getFullYear() + 1, mo - 1, day, 12);
+      key = dkey(dt);
+    }
+  }
+  if(!key) return null;
+  const rest = s.replace(m[0], " ").replace(/\s+/g, " ").trim().replace(/(?: (?:on|for|by|due|before|until|at|is|are))+$/, "").trim();
+  return {d: key, rest: rest};
+}
+function cleanTask(t){
+  let prev;
+  do { prev = t; t = t.replace(/\s+/g, " ").trim().replace(/\b(?:is|are|was|will be|has to be|needs to be|due|at|to|for|on|by)$/, "").trim(); } while(t !== prev);
+  return t;
 }
 
 /* ---------- screens ---------- */
@@ -174,27 +259,94 @@ function show(tab){
 }
 document.querySelectorAll("nav button").forEach(b => b.onclick = () => show(b.dataset.tab));
 
-/* ---------- lists ---------- */
+/* ---------- tasks ---------- */
+function sortedTasks(){
+  const k = x => x.d || "9999";
+  return tasks.map((x, i) => ({x: x, i: i})).sort((a, b) => k(a.x) < k(b.x) ? -1 : k(a.x) > k(b.x) ? 1 : a.i - b.i).map(o => o.x);
+}
+function addTask(text, d){
+  text = cap(cleanTask(text)); if(!text) return null;
+  tasks.push({t: text, d: d || ""}); save("tasks", tasks); renderAll(); return text;
+}
+function completeTask(x){
+  tasks = tasks.filter(y => y !== x);
+  doneLog.push(dkey()); doneLog = doneLog.slice(-300); save("doneLog", doneLog);
+  save("tasks", tasks); renderAll();
+}
+function doneToday(){ return doneLog.filter(k => k === dkey()).length; }
+function taskSpeech(x){ return x.t + (x.d ? ", due " + dateWords(x.d) : ""); }
+function taskRow(x){
+  const li = el("li"); li.appendChild(el("span", "chk"));
+  const g = el("span", "grow"); g.appendChild(el("div", "", x.t));
+  if(x.d){ const n = daysUntil(x.d); g.appendChild(el("div", "sub" + (n < 0 ? " late" : ""), dueLabel(n))); }
+  li.appendChild(g); li.onclick = () => completeTask(x);
+  return li;
+}
 function renderTasks(){
   const ul = $("tasks"); ul.innerHTML = "";
   if(!tasks.length) ul.appendChild(el("li", "empty", "Nothing to do. Nice."));
-  tasks.forEach((t, i) => {
-    const li = el("li"); li.appendChild(el("span", "chk")); li.appendChild(el("span", "grow", t));
-    li.onclick = () => { tasks.splice(i, 1); save("tasks", tasks); renderAll(); };
-    ul.appendChild(li);
-  });
+  sortedTasks().forEach(x => ul.appendChild(taskRow(x)));
 }
-function renderDues(){
-  const ul = $("dues"); ul.innerHTML = "";
-  if(!dues.length) ul.appendChild(el("li", "empty", "No due dates yet."));
-  dues.slice().sort((a, b) => a.d < b.d ? -1 : 1).forEach(x => {
-    const li = el("li"); const g = el("span", "grow");
-    g.appendChild(el("div", "", x.n)); g.appendChild(el("div", "sub", dueLabel(daysUntil(x.d))));
-    li.appendChild(g);
-    li.onclick = () => { dues = dues.filter(y => y !== x); save("dues", dues); renderAll(); };
-    ul.appendChild(li);
+
+/* ---------- Google Classroom import (paste in) ---------- */
+function importClassroom(text){
+  const lines = text.split("\n").map(x => x.trim()).filter(Boolean);
+  const isDue = l => /^due\b/i.test(l);
+  const skip = l => /^(assigned|missing|done|turned in|done late|graded|posted|view|open|to-do|to do|this week|next week|later|earlier|no due date|all classes|all|not turned in|ungraded)$/i.test(l);
+  const clean = l => !isDue(l) && !skip(l);
+  let added = 0, dups = 0, skipped = 0;
+  lines.forEach((l, i) => {
+    if(!isDue(l)) return;
+    const raw = l.replace(/^due\s*(date)?:?\s*/i, "").toLowerCase().replace(/,/g, " ").replace(/\b\d{1,2}:\d{2} ?(?:am|pm)?\b/g, " ").replace(/\s+/g, " ").trim();
+    const dd = parseDate(raw);
+    const l1 = i >= 1 && clean(lines[i - 1]) ? lines[i - 1] : "", l2 = i >= 2 && clean(lines[i - 2]) ? lines[i - 2] : "";
+    const title = (l1 && l2 ? l2 + " - " + l1 : l1).slice(0, 90);
+    if(!dd || !title){ skipped++; return; }
+    if(tasks.some(x => x.t.toLowerCase() === title.toLowerCase() && x.d === dd.d)){ dups++; return; }
+    tasks.push({t: cap(title), d: dd.d}); added++;
   });
+  if(added){ save("tasks", tasks); renderAll(); }
+  return {added: added, dups: dups, skipped: skipped};
 }
+$("gcImport").onclick = () => {
+  const r = importClassroom($("gcText").value);
+  let msg = r.added ? "Added " + r.added + " assignment" + (r.added === 1 ? "" : "s") + " to your calendar." : "I couldn't find any new due dates. Make sure the pasted text has lines like Due Nov 12.";
+  if(r.dups) msg += " Skipped " + r.dups + " you already have.";
+  if(r.skipped) msg += " Couldn't read " + r.skipped + ".";
+  $("gcMsg").textContent = msg;
+  if(r.added){ $("gcText").value = ""; say("Imported " + r.added + " assignment" + (r.added === 1 ? "" : "s") + " from Classroom."); }
+};
+
+/* ---------- calendar ---------- */
+let calY = new Date().getFullYear(), calM = new Date().getMonth(), calSel = dkey();
+function renderCal(){
+  const first = new Date(calY, calM, 1), dim = new Date(calY, calM + 1, 0).getDate();
+  $("calTitle").textContent = first.toLocaleDateString([], {month: "long", year: "numeric"});
+  const g = $("calGrid"); g.innerHTML = "";
+  ["S","M","T","W","T","F","S"].forEach(x => g.appendChild(el("div", "dow", x)));
+  for(let i = 0; i < first.getDay(); i++) g.appendChild(el("div", "day blank"));
+  for(let d = 1; d <= dim; d++){
+    const key = calY + "-" + pad(calM + 1) + "-" + pad(d);
+    const cell = el("div", "day" + (key === dkey() ? " today" : "") + (key === calSel ? " sel" : ""));
+    cell.appendChild(el("span", "", d));
+    const n = tasks.filter(x => x.d === key).length, dots = el("div", "dots");
+    for(let i = 0; i < Math.min(n, 3); i++) dots.appendChild(el("i"));
+    cell.appendChild(dots);
+    cell.onclick = () => { calSel = key; renderCal(); };
+    g.appendChild(cell);
+  }
+  $("calDayTitle").textContent = cap(dateWords(calSel));
+  const ul = $("calDay"); ul.innerHTML = "";
+  const items = tasks.filter(x => x.d === calSel);
+  if(!items.length) ul.appendChild(el("li", "empty", "Nothing on this day."));
+  items.forEach(x => ul.appendChild(taskRow(x)));
+}
+$("calPrev").onclick = () => { calM--; if(calM < 0){ calM = 11; calY--; } renderCal(); };
+$("calNext").onclick = () => { calM++; if(calM > 11){ calM = 0; calY++; } renderCal(); };
+$("calToday").onclick = () => { const n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); calSel = dkey(); renderCal(); };
+$("calForm").onsubmit = e => { e.preventDefault(); const v = $("calIn").value.trim(); if(v) addTask(v, calSel); $("calIn").value = ""; };
+
+/* ---------- notes and habits ---------- */
 function renderNotes(){
   const ul = $("notes"); ul.innerHTML = "";
   if(!notes.length) ul.appendChild(el("li", "empty", "No notes yet."));
@@ -221,20 +373,16 @@ function toggleHabit(h){
   if(i >= 0) h.d.splice(i, 1); else h.d.push(k);
   save("habits", habits); renderAll();
 }
-function renderAll(){ renderTasks(); renderDues(); renderNotes(); renderHabits(); }
+function renderAll(){ renderTasks(); renderCal(); renderNotes(); renderHabits(); }
 
-$("taskForm").onsubmit = e => { e.preventDefault(); const v = $("taskIn").value.trim(); if(v){ tasks.push(v); save("tasks", tasks); renderAll(); } $("taskIn").value = ""; };
+$("taskForm").onsubmit = e => { e.preventDefault(); const v = $("taskIn").value.trim(); if(v) addTask(v, $("taskDate").value); $("taskIn").value = ""; $("taskDate").value = ""; };
 $("noteForm").onsubmit = e => { e.preventDefault(); const v = $("noteIn").value.trim(); if(v){ notes.push(v); save("notes", notes); renderAll(); } $("noteIn").value = ""; };
 $("habitForm").onsubmit = e => { e.preventDefault(); const v = $("habitIn").value.trim(); if(v){ habits.push({n: v, d: []}); save("habits", habits); renderAll(); } $("habitIn").value = ""; };
-$("dueForm").onsubmit = e => {
-  e.preventDefault(); const n = $("dueName").value.trim(), d = $("dueDate").value;
-  if(n && d){ dues.push({n: n, d: d}); save("dues", dues); renderAll(); $("dueName").value = ""; $("dueDate").value = ""; }
-};
 
 /* ---------- clock ---------- */
 function getGreeting(){
   const h = new Date().getHours();
-  return (h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening") + ", John.";
+  return (h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening") + ", " + userName + ".";
 }
 function timeText(){ return new Date().toLocaleTimeString([], {hour: "numeric", minute: "2-digit"}); }
 function dateText(){ return new Date().toLocaleDateString([], {weekday: "long", month: "long", day: "numeric"}); }
@@ -251,12 +399,17 @@ function loadWeather(){
   if(!navigator.geolocation){ showWeather("This phone can't share its location."); return; }
   navigator.geolocation.getCurrentPosition(async p => {
     try {
-      const url = "https://api.open-meteo.com/v1/forecast?latitude=" + p.coords.latitude +
-        "&longitude=" + p.coords.longitude + "&current=temperature_2m,weather_code&temperature_unit=fahrenheit";
+      const url = "https://api.open-meteo.com/v1/forecast?latitude=" + p.coords.latitude + "&longitude=" + p.coords.longitude +
+        "&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
+        "&temperature_unit=fahrenheit&timezone=auto&forecast_days=1";
       const d = await (await fetch(url)).json();
-      const t = Math.round(d.current.temperature_2m);
-      const c = codes[d.current.weather_code] || "mixed conditions";
-      showWeather("It is " + t + " degrees and " + c + " right now.");
+      const t = Math.round(d.current.temperature_2m), c = codes[d.current.weather_code] || "mixed conditions";
+      let txt = "It is " + t + " degrees and " + c + " right now.";
+      try {
+        const hi = Math.round(d.daily.temperature_2m_max[0]), lo = Math.round(d.daily.temperature_2m_min[0]), rain = d.daily.precipitation_probability_max[0];
+        txt += " Today's high is " + hi + " and the low is " + lo + ", with a " + rain + " percent chance of rain.";
+      } catch(e){}
+      showWeather(txt);
     } catch(e){ showWeather("I couldn't get the weather."); }
   }, () => showWeather("Location is off, so I can't check the weather."));
 }
@@ -278,23 +431,31 @@ let listening = false;
 setInterval(() => $("reactor").classList.toggle("active", speechSynthesis.speaking || listening), 300);
 
 /* ---------- conversation log ---------- */
+function trimLog(){ while($("log").children.length > 30) $("log").removeChild($("log").firstChild); $("log").scrollTop = $("log").scrollHeight; }
 function addLine(who, text){
   const d = el("div", who === "You" ? "you" : "jv"); d.appendChild(el("span", "", text));
-  $("log").appendChild(d);
-  while($("log").children.length > 30) $("log").removeChild($("log").firstChild);
-  $("log").scrollTop = $("log").scrollHeight;
+  $("log").appendChild(d); trimLog();
+}
+function addLink(label, href){
+  const d = el("div", "jv"); const a = el("a", "", label);
+  a.href = href; a.target = "_blank"; a.rel = "noopener"; d.appendChild(a); $("log").appendChild(d); trimLog();
 }
 function say(text){ addLine("Jarvis", text); speak(text); }
 
 /* ---------- timer ---------- */
-let timerEnd = 0, timerId = null;
+let timerEnd = 0, timerId = null, timerMsg = "";
 function tick(){
   const left = Math.round((timerEnd - Date.now()) / 1000);
-  if(left <= 0){ clearInterval(timerId); timerId = null; $("timer").textContent = ""; say("Your timer is done, John."); return; }
+  if(left <= 0){ clearInterval(timerId); timerId = null; $("timer").textContent = ""; say(timerMsg || "Your timer is done, " + userName + "."); return; }
   const m = Math.floor(left / 60), s = left % 60;
-  $("timer").textContent = m + ":" + (s < 10 ? "0" : "") + s;
+  $("timer").textContent = m + ":" + pad(s);
 }
-function startTimer(sec){ clearInterval(timerId); timerEnd = Date.now() + sec * 1000; timerId = setInterval(tick, 500); tick(); }
+function startTimer(sec, msg){ clearInterval(timerId); timerMsg = msg || ""; timerEnd = Date.now() + sec * 1000; timerId = setInterval(tick, 500); tick(); }
+function timeLeftText(){
+  if(!timerId) return "No timer is running.";
+  const left = Math.max(0, Math.round((timerEnd - Date.now()) / 1000)), m = Math.floor(left / 60), s = left % 60;
+  return (m ? m + " minute" + (m === 1 ? "" : "s") + " and " : "") + s + " second" + (s === 1 ? "" : "s") + " left.";
+}
 
 /* ---------- study quiz ---------- */
 function parseCards(text){
@@ -331,7 +492,7 @@ function renderQuiz(){
   const ans = el("div", "a", c.a); ans.style.display = "none"; card.appendChild(ans);
   const row = el("div", "btnrow");
   const sh = el("button", "b", "Show answer");
-  const got = el("button", "b", "Got it"); const mis = el("button", "b ghost", "Missed it");
+  const got = el("button", "b", "Got it"), mis = el("button", "b ghost", "Missed it");
   got.style.display = mis.style.display = "none";
   sh.onclick = () => { ans.style.display = "block"; sh.style.display = "none"; got.style.display = mis.style.display = ""; speak(c.a); };
   got.onclick = () => { score++; qi++; renderQuiz(); };
@@ -345,95 +506,223 @@ $("cardText").value = typeof cardsText === "string" ? cardsText : "";
 $("saveCards").onclick = () => { cardsText = $("cardText").value; save("cardsText", cardsText); say("Saved " + parseCards(cardsText).length + " study cards."); };
 $("startQuiz").onclick = () => { cardsText = $("cardText").value; save("cardsText", cardsText); startQuiz(parseCards(cardsText)); };
 
-/* ---------- understanding commands ---------- */
-const nums = {one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,fifteen:15,twenty:20,thirty:30,sixty:60};
+/* ---------- brain: small talk content ---------- */
+const JOKES = ["Why was the math book sad? It had too many problems.", "Why don't scientists trust atoms? Because they make up everything.", "I told my computer I needed a break, and now it won't stop sending me vacation ads.", "What do you call a fake noodle? An impasta.", "Why did the computer go to the doctor? It caught a virus."];
+const FACTS = ["Honey never spoils. People have found edible honey in ancient tombs.", "Octopuses have three hearts.", "A day on Venus is longer than a year on Venus.", "Bananas are berries, but strawberries are not.", "Sharks are older than trees."];
+const PEP = ["Small steps every day beat big plans you never start.", "You don't have to do it all today. Just the next thing.", "Done is better than perfect.", "Start for five minutes. Momentum does the rest.", "Hard things get easier when you stop waiting to feel ready."];
+let lastQ = "";
+
 function listWords(arr){ return arr.map((t, i) => (i + 1) + ", " + t).join(". "); }
 function brief(){
+  const dated = tasks.filter(x => x.d).sort((a, b) => a.d < b.d ? -1 : 1);
   const n = tasks.length;
-  const next = dues.slice().sort((a, b) => a.d < b.d ? -1 : 1)[0];
   let t = getGreeting() + " It is " + timeText() + " on " + dateText() + ". " + weatherText + " ";
   t += n ? "You have " + n + " thing" + (n === 1 ? "" : "s") + " on your list. " : "Your list is empty. ";
-  if(next) t += dueSpeech(next) + ". ";
+  if(dated.length) t += dated[0].t + " is due " + dateWords(dated[0].d) + ". ";
   const left = habits.filter(h => !h.d.includes(dkey())).length;
-  if(left) t += left + " habit" + (left === 1 ? "" : "s") + " still to do today.";
+  if(left) t += left + " habit" + (left === 1 ? "" : "s") + " still to do today. ";
+  if(doneToday()) t += "You've finished " + doneToday() + " already today. ";
   return t.trim();
 }
+function agenda(s){
+  const dd = parseDate(s);
+  if(dd){
+    const items = tasks.filter(x => x.d === dd.d);
+    return say(items.length ? "For " + dateWords(dd.d) + " you have: " + listWords(items.map(x => x.t)) : "Nothing on " + dateWords(dd.d) + ".");
+  }
+  if(/week/.test(s)){
+    const end = addDays(7), items = tasks.filter(x => x.d && x.d >= dkey() && x.d <= end).sort((a, b) => a.d < b.d ? -1 : 1);
+    return say(items.length ? "This week: " + items.map(taskSpeech).join(". ") : "Nothing on the calendar this week.");
+  }
+  const late = tasks.filter(x => x.d && x.d < dkey()), dated = tasks.filter(x => x.d && x.d >= dkey()).sort((a, b) => a.d < b.d ? -1 : 1), undated = tasks.filter(x => !x.d);
+  if(!tasks.length) return say("Your list is empty. Nice.");
+  let t = "";
+  if(late.length) t += late.length + " overdue: " + late.map(x => x.t).join(", ") + ". ";
+  if(dated.length) t += "Coming up: " + dated.slice(0, 6).map(taskSpeech).join(". ") + ". ";
+  if(undated.length) t += undated.length + " more with no date: " + undated.slice(0, 5).map(x => x.t).join(", ") + ".";
+  say(t.trim());
+}
+function tryMath(s){
+  let t = s.replace(/\b(what'?s|what is|how much is|calculate|compute|math|equals?)\b/g, " ")
+    .replace(/(\d+(?:\.\d+)?) ?(?:percent|%) of (\d+(?:\.\d+)?)/g, "($1/100*$2)")
+    .replace(/\bplus\b/g, "+").replace(/\bminus\b/g, "-").replace(/\b(?:times|multiplied by|x)\b/g, "*").replace(/\b(?:divided by|over)\b/g, "/")
+    .replace(/\s+/g, "");
+  if(!/^[\d.+\-*/()]+$/.test(t) || !/\d/.test(t) || !/[+\-*/]/.test(t) || /\*\*/.test(t)) return null;
+  try { const r = Function('"use strict";return (' + t + ')')(); if(typeof r === "number" && isFinite(r)) return Math.round(r * 10000) / 10000; } catch(e){}
+  return null;
+}
+function completeByName(name){
+  name = name.trim();
+  let x = tasks.find(t => t.t.toLowerCase().includes(name));
+  if(x){ completeTask(x); return "Nice work. Checked off " + x.t + "."; }
+  const h = habits.find(h => h.n.toLowerCase().includes(name) || name.includes(h.n.toLowerCase()));
+  if(h){ if(!h.d.includes(dkey())){ h.d.push(dkey()); save("habits", habits); renderAll(); } return "Logged. " + h.n + " is at a " + streak(h) + " day streak."; }
+  return null;
+}
 
+/* ---------- brain: understanding what you say ---------- */
 function handle(raw){
   raw = raw.trim(); if(!raw) return;
   addLine("You", raw);
-  let s = raw.toLowerCase().replace(/[.!?,]+$/, "");
-  Object.keys(nums).forEach(w => { s = s.replace(new RegExp("\\b" + w + "\\b", "g"), nums[w]); });
+  speechSynthesis.cancel();
+  const s0 = raw.toLowerCase().replace(/[\u201c\u201d"]/g, "").replace(/[!?.,;:]+(?=\s|$)/g, "").replace(/\bjarvis\b/g, " ").replace(/\s+/g, " ").trim();
+  let s = s0, prev;
+  do { prev = s; s = s.replace(/^(?:yo|hey|hi|hello|ok|okay|um+|uh+|er|like|so|well|alright|right|please|hmm+|and|then|can you|could you|will you|would you|i want you to|i need you to|i wanna|go ahead and|just)\b ?/, "").trim(); } while(s !== prev);
+  do { prev = s; s = s.replace(/ ?\b(?:please|for me|real quick|right now|man|dude|bro)$/, "").trim(); } while(s !== prev);
+  s = s.replace(/\bhalf an hour\b/g, "30 minutes").replace(/\ban hour\b/g, "1 hour")
+       .replace(/\b(one|two|three|four|five|six|seven|eight|nine|ten|fifteen|twenty|thirty|forty|sixty)\b(?= ?(?:seconds?|minutes?|hours?|secs?|mins?|days?|weeks?))/g,
+         w => ({one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,fifteen:15,twenty:20,thirty:30,forty:40,sixty:60})[w]);
   let m;
+  const mood = lastQ; lastQ = "";
 
-  if(/^(hi|hello|hey|yo)\b/.test(s)) return say(getGreeting() + " How can I help?");
-  if(/thank/.test(s)) return say("Any time, John.");
-  if(/\bhelp\b|what can you do/.test(s)) return say("Try: add buy milk to my to-do list. What's on my list. Done with buy milk. Timer for 5 minutes. Note that I like pizza. Add habit read 20 minutes. I did read 20 minutes. What's due. Quiz me. What time is it. Or say brief me.");
-
-  if((m = s.match(/^(?:open|go to) (home|tasks?|to[- ]?do|notes|habits|study)/))){
-    const w = m[1]; show(/task|to/.test(w) ? "tasks" : w === "home" ? "home" : w); return say("Opening " + w + ".");
+  /* safety first */
+  if(/(kill myself|suicid|want to die|end my life|hurt myself|self.?harm)/.test(s0)){
+    return say("I'm really sorry you're feeling that way, " + userName + ". You don't have to handle it alone. Please talk to someone you trust right now, or call or text 988 if you're in the US.");
   }
-  if(/quiz me|study me|start (a )?quiz/.test(s)){ cardsText = $("cardText").value || cardsText; if(startQuiz(parseCards(cardsText))) addLine("Jarvis", "Starting your quiz."); return; }
 
-  if((m = s.match(/(\d+) ?(second|minute|hour|sec|min)s?/)) && /timer|remind|countdown/.test(s)){
-    const n = parseInt(m[1], 10), u = m[2][0];
-    startTimer(u === "h" ? n * 3600 : u === "m" ? n * 60 : n);
-    return say("Timer set for " + n + " " + (u === "h" ? "hour" : u === "m" ? "minute" : "second") + (n === 1 ? "" : "s") + ".");
+  /* quiet */
+  if(/^(stop|quiet|be quiet|stop talking|silence|enough|shut up|never mind|nevermind)$/.test(s0) || /^(stop|quiet|enough)$/.test(s)){ return; }
+
+  /* answering "how are you" */
+  if(mood === "mood"){
+    if(/\b(good|great|fine|well|awesome|amazing|happy|not bad|pretty good|doing good|okay|ok)\b/.test(s0) && !/not good|not great|not okay/.test(s0)) return say(pick(["Glad to hear it, " + userName + ". Let's keep the momentum going.", "Excellent. That's the kind of energy I like.", "Good to hear. What's the plan?"]));
+    if(/\b(tired|bad|stressed|sad|rough|not good|terrible|exhausted|anxious|overwhelmed|meh|not great|not okay)\b/.test(s0)) return say("Sorry to hear that, " + userName + ". One thing at a time. Want me to line up the easiest task first, or start a five minute break timer?");
   }
-  if(/(cancel|stop) .*timer/.test(s)){ clearInterval(timerId); timerId = null; $("timer").textContent = ""; return say("Timer cancelled."); }
 
-  if((m = s.match(/^(?:add|new) habit (.+)$/))){ habits.push({n: m[1], d: []}); save("habits", habits); renderAll(); return say("New habit added: " + m[1] + "."); }
-  if((m = s.match(/^(?:i )?(?:did|practiced|worked on|completed my) (.+)$/))){
+  /* greeting / name */
+  if(!s){ return say(/\b(hi|hello|hey|yo|sup)\b/.test(s0) ? pick([getGreeting() + " How can I help?", "Hello, " + userName + ". What can I do for you?", "Hey " + userName + ". What's on your mind?"]) : pick(["Yes, " + userName + "? I'm listening.", "At your service.", "I'm here. What do you need?"])); }
+  if((m = s0.match(/(?:my name is|call me|i am called|i go by) ([a-z' -]{1,20})$/))){ userName = cap(m[1].trim()); save("name", userName); updateClock(); return say("Got it. I'll call you " + userName + "."); }
+
+  /* small talk */
+  if(/\b(how are you|how'?s it going|how you doing|how do you feel|you good|you okay|how have you been)\b/.test(s0)){ lastQ = "mood"; return say(pick(["All systems running smoothly, " + userName + ". How are you doing?", "Running at full power. How about you?", "Never better. I don't get tired, which helps. How are you?"])); }
+  if(/\b(what'?s up|sup|wassup|what are you up to|what'?s good|what'?s new)\b/.test(s0)){ lastQ = "mood"; return say(pick(["Just keeping an eye on your day, " + userName + ". What's up with you?", "Monitoring your schedule and waiting for orders. What's going on?", "Not much, just ready to help. What do you need?"])); }
+  if(/\b(who are you|what are you|your name|are you real|are you an? (ai|robot|bot)|who made you|who built you)\b/.test(s0)) return say("I'm Jarvis, your personal assistant, built right here on your phone with you, " + userName + ". I run on your tasks, calendar, timers and a lot of rules, no cloud brain yet.");
+  if(/\b(thank|thanks|appreciate)\b/.test(s0)) return say(pick(["Any time, " + userName + ".", "Happy to help.", "That's what I'm here for."]));
+  if(/\b(you'?re (awesome|great|the best|amazing|cool|smart)|good job|nice work|love you)\b/.test(s0)) return say(pick(["Thank you, " + userName + ". I'll keep it up.", "I appreciate that. Back to work?", "High praise. I'll take it."]));
+  if(/\b(good ?night|goodnight|going to bed|sleep time)\b/.test(s0)) return say("Good night, " + userName + ". Rest up. I'll be here in the morning.");
+  if(/\b(bye|goodbye|see you|talk to you later|catch you later)\b/.test(s0)) return say(pick(["Talk soon, " + userName + ".", "See you later.", "Goodbye for now."]));
+  if(/\b(joke|make me laugh|something funny)\b/.test(s0)) return say(pick(JOKES));
+  if(/\b(fun fact|random fact|tell me a fact|something interesting)\b/.test(s0)) return say(pick(FACTS));
+  if(/\b(motivate|motivation|inspire|inspiration|pep talk|encourage me|quote)\b/.test(s0)) return say(pick(PEP));
+  if(/\b(flip a coin|coin flip|heads or tails)\b/.test(s0)) return say(Math.random() < 0.5 ? "Heads." : "Tails.");
+  if(/\b(roll (a )?(dice|die))\b/.test(s0)) return say("You rolled a " + (1 + Math.floor(Math.random() * 6)) + ".");
+  if((m = s0.match(/random number (?:between|from) (\d+) (?:and|to) (\d+)/))){ const a = +m[1], b = +m[2], lo = Math.min(a, b), hi = Math.max(a, b); return say("How about " + (lo + Math.floor(Math.random() * (hi - lo + 1))) + "."); }
+  if(/\b(i'?m bored|im bored|i am bored)\b/.test(s0)) return say("Let's fix that. I can quiz you, start a focus session, tell you a joke, or plan your next task. Just pick one.");
+  if(/\b(i'?m|im|i am|i feel) (so |really |very )?(tired|stressed|overwhelmed|anxious|exhausted|sad|burnt out|burned out)\b/.test(s0)) return say("That's rough, " + userName + ". Take a breath. Pick one small thing, or want me to start a five minute break timer?");
+  if(/\b(what can you do|help|commands|what do you do)\b/.test(s0)) return say("I can manage your tasks and calendar, set timers, take notes, track habits, quiz you, check the weather, do math, and chat. Try: add essay to my list for Friday. Or: what's on my calendar tomorrow. Or: start a focus session.");
+
+  /* navigation */
+  if((m = s.match(/^(?:open|go to|show me|switch to) (?:the |my )?(home|tasks?|to[- ]?do|calendar|notes|habits|study)(?: tab| page| screen)?$/))){
+    const w = m[1]; show(/task|to/.test(w) ? "tasks" : w); return say("Opening " + w + ".");
+  }
+  if(/\b(quiz me|study me|start (a )?quiz|test me)\b/.test(s)){ cardsText = $("cardText").value || cardsText; if(startQuiz(parseCards(cardsText))) addLine("Jarvis", "Starting your quiz."); return; }
+
+  /* timers and focus */
+  if(/\b(focus|pomodoro|study session|work session)\b/.test(s) && !/(what|how|tell)/.test(s)){
+    startTimer(25 * 60, "Focus session over. Great work, " + userName + ". Take a five minute break."); return say("Focus session started. Twenty five minutes. No distractions. Go.");
+  }
+  if(/(time (is )?left|how much time|timer status|how long.*(left|timer))/.test(s)) return say(timeLeftText());
+  if(/\b(cancel|stop|clear|turn off|end) (the |my |that )?(timer|focus)/.test(s)){ clearInterval(timerId); timerId = null; $("timer").textContent = ""; return say("Timer cancelled."); }
+  if((m = s.match(/(\d+) ?(second|minute|hour|sec|min)s?/)) && /timer|remind|countdown|alarm|wake me|let me know|tell me in|alert/.test(s)){
+    const n = parseInt(m[1], 10), u = m[2][0], note = s.match(/\b(?:to|about|that) (.+)$/);
+    const label = /remind/.test(s) && note ? "Reminder, " + userName + ": " + note[1] + "." : "";
+    startTimer(u === "h" ? n * 3600 : u === "m" ? n * 60 : n, label);
+    return say((label ? "Okay, I'll remind you in " : "Timer set for ") + n + " " + (u === "h" ? "hour" : u === "m" ? "minute" : "second") + (n === 1 ? "" : "s") + ".");
+  }
+
+  /* habits */
+  if((m = s.match(/^(?:add|new|start|create) (?:a )?habit (?:of |called )?(.+)$/))){ habits.push({n: cap(m[1]), d: []}); save("habits", habits); renderAll(); return say("New habit added: " + m[1] + "."); }
+  if((m = s.match(/^(?:i )?(?:did|practiced|worked on|completed my|finished my|just did) (.+)$/))){
     const h = habits.find(x => x.n.toLowerCase().includes(m[1]) || m[1].includes(x.n.toLowerCase()));
     if(h){ if(!h.d.includes(dkey())){ h.d.push(dkey()); save("habits", habits); renderAll(); } return say("Logged. " + h.n + " is at a " + streak(h) + " day streak."); }
   }
-  if(/habit|streak/.test(s) && /(how|what|read|show|tell)/.test(s)){
-    return say(habits.length ? habits.map(h => h.n + ": " + streak(h) + " day streak" + (h.d.includes(dkey()) ? ", done today" : ", not done yet")).join(". ") : "You have no habits yet.");
+  if(/(habit|streak)/.test(s) && /(how|what|read|show|tell|check)/.test(s)){
+    return say(habits.length ? habits.map(h => h.n + ": " + streak(h) + " day streak" + (h.d.includes(dkey()) ? ", done today" : ", not done yet")).join(". ") : "You have no habits yet. Say add habit, then the name.");
   }
 
-  if(/what'?s due|what is due|what'?s coming up|deadlines?/.test(s)){
-    const sorted = dues.slice().sort((a, b) => a.d < b.d ? -1 : 1);
-    return say(sorted.length ? sorted.map(dueSpeech).join(". ") : "Nothing is due. Enjoy it.");
+  /* math and countdowns to dates */
+  const mathAns = tryMath(s); if(mathAns !== null) return say("That's " + mathAns + ".");
+  if((m = s.match(/(?:how many days|how long|how much time) (?:until|till|to|before) (.+)$/))){
+    const dd = parseDate(m[1]);
+    if(dd){ const n = daysUntil(dd.d); return say(n === 0 ? "That's today." : n === 1 ? "That's tomorrow." : n < 0 ? "That was " + Math.abs(n) + " days ago." : "That's in " + n + " days."); }
   }
 
-  if((m = s.match(/^(?:add|put) (.+?) (?:to|on) (?:my |the )?(?:to[- ]?do|task|tasks)(?: list)?$/)) ||
-     (m = s.match(/^(?:add task|add a task|new task|remind me to|i need to) (.+)$/))){
-    tasks.push(m[1]); save("tasks", tasks); renderAll(); return say("Added " + m[1] + " to your list.");
-  }
-  if((m = s.match(/^(?:done with|finished|finish|complete|check off|remove|delete) (.+)$/))){
-    const i = tasks.findIndex(t => t.toLowerCase().includes(m[1]));
-    if(i >= 0){ const t = tasks.splice(i, 1)[0]; save("tasks", tasks); renderAll(); return say("Nice work. Checked off " + t + "."); }
-    return say("I couldn't find " + m[1] + " on your list.");
-  }
-  if(/clear (my |the )?(to[- ]?do|tasks|list)/.test(s)){ tasks = []; save("tasks", tasks); renderAll(); return say("Your list is cleared."); }
-  if(/(what|read|show|tell).*(list|tasks|to[- ]?do)/.test(s)){
-    return say(tasks.length ? "You have " + tasks.length + " thing" + (tasks.length === 1 ? "" : "s") + " on your list. " + listWords(tasks) : "Your list is empty. Nice.");
+  /* what should I do */
+  if(/(what should i do|what do i do|what'?s next|what do i need to do first|where do i start|plan my (day|homework)|help me (get started|start|focus)|tell me what to do)/.test(s)){
+    const next = sortedTasks()[0];
+    return say(next ? "Start with " + next.t + (next.d ? ", due " + dateWords(next.d) : "") + ". Say focus and I'll run a twenty five minute session." : "Nothing on your list. Take a breath, or add something and I'll plan it.");
   }
 
-  if(/clear (my |the )?notes/.test(s)){ notes = []; save("notes", notes); renderAll(); return say("Notes cleared."); }
-  if(/(read|show|what).*notes/.test(s)){ return say(notes.length ? listWords(notes) : "You have no notes yet."); }
-  if((m = s.match(/^(?:take a note|make a note|note|remember)(?: that)? (.+)$/))){ notes.push(m[1]); save("notes", notes); renderAll(); return say("Noted."); }
+  /* adding tasks and calendar items */
+  const dd = parseDate(s), base = dd ? dd.rest : s, when = dd ? dd.d : "";
+  if(!/^(?:what|when|how|read|show|tell|any|do i|is there|are there)\b/.test(s)){
+    if((m = base.match(/^(?:add|put|create|make|schedule|write down|set up) (?:a |an |the |my )?(?:task |reminder |event |to[- ]?do )?(.+?)(?: (?:to|on|onto|in|for|into) (?:my |the )?(?:to[- ]?do|tasks?|list|calendar|schedule|agenda)(?: list)?)?$/)) ||
+       (m = base.match(/^(?:remind me to|remind me about|i need to|i have to|i gotta|i got to|don'?t let me forget to|i should|i must|reminder to|reminder) (.+)$/)) ||
+       (dd && (m = base.match(/^i (?:have|got) (?:a |an |the )?(.+)$/)))){
+      const t = addTask(m[1], when);
+      if(t) return say("Added " + t + (when ? " for " + dateWords(when) : " to your list") + ".");
+    }
+  }
 
-  if(/what.*time|current time/.test(s)) return say("It is " + timeText() + ".");
-  if(/what.*(date|day)|today'?s date/.test(s)) return say("Today is " + dateText() + ".");
-  if(/weather|temperature|outside/.test(s)) return say(weatherText || "I don't have the weather yet.");
-  if(/brief|good (morning|afternoon|evening)|catch me up/.test(s)) return say(brief());
+  /* checking things off */
+  if((m = s.match(/^(?:mark|check) (.+?) (?:as )?(?:done|complete|completed|finished)$/)) || (m = s.match(/^(?:done with|done|finished|finish|complete|completed|check off|cross off|remove|delete|i finished|i'?m done with|i did|i completed) (.+)$/))){
+    const r = completeByName(m[1]); return say(r || "I couldn't find " + m[1] + " on your list.");
+  }
+  if(/\bclear (my |the |all )?(to[- ]?do|tasks|list)/.test(s)){ tasks = []; save("tasks", tasks); renderAll(); return say("Your list is cleared."); }
 
-  say("Sorry, I didn't catch that. Say help to hear what I can do.");
+  /* calendar and list questions */
+  if(/\b(calendar|schedule|agenda|due|coming up|deadline|deadlines|homework|plans|what do i have|anything on)\b/.test(s) && /^(what|when|how|read|show|tell|any|do i|is there|are there|check|list|give|whats)/.test(s)) return agenda(s);
+  if(/(what|read|show|tell|check|list).*(list|tasks|to[- ]?do)/.test(s)) return agenda(s);
+  if(/^(?:my )?(calendar|schedule|agenda)$/.test(s)) return agenda(s);
+
+  /* notes */
+  if(/\bclear (my |the |all )?notes/.test(s)){ notes = []; save("notes", notes); renderAll(); return say("Notes cleared."); }
+  if(/(read|show|what|check).*notes/.test(s)) return say(notes.length ? listWords(notes) : "You have no notes yet.");
+  if((m = s.match(/^(?:take a note|make a note|note to self|note|remember|jot down|write down)(?: that)? (.+)$/))){ notes.push(cap(m[1])); save("notes", notes); renderAll(); return say("Noted."); }
+
+  /* info */
+  if(/what.*(time|clock)|current time|what time/.test(s)) return say("It is " + timeText() + ".");
+  if(/what.*(date|day|today)|today'?s date/.test(s)) return say("Today is " + dateText() + ".");
+  if(/weather|temperature|how hot|how cold|raining|rain today|do i need (a |an )?(jacket|umbrella|coat)/.test(s)) return say(weatherText || "I don't have the weather yet.");
+  if(/\b(brief|catch me up|morning report|daily briefing|what'?s my day)\b|^good (morning|afternoon|evening)$/.test(s)) return say(brief());
+
+  /* fallback: be friendly, offer a search */
+  say(pick(["That one's beyond my free brain, " + userName + ", but I can search the web for you.", "I'm not sure how to do that yet, " + userName + ". I can search for it, or you can say help.", "Hmm, I don't know that one. Tap the link and I'll send you to a search."]));
+  addLink("Search the web for: " + raw, "https://www.google.com/search?q=" + encodeURIComponent(raw));
 }
 
-/* ---------- inputs ---------- */
+/* ---------- chips ---------- */
+["Brief me", "What's due", "What should I do first", "Focus session", "Quiz me", "Tell me a joke", "Help"].forEach(c => {
+  const b = el("button", "chip", c); b.onclick = () => handle(c); $("chips").appendChild(b);
+});
+
+/* ---------- listening ---------- */
 $("form").onsubmit = e => { e.preventDefault(); const v = $("cmd").value; $("cmd").value = ""; handle(v); };
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec = null, recTimer = null;
+function setStatus(t){ $("status").textContent = t || ""; }
 $("reactor").onclick = () => {
-  if(!SR){ say("Voice input isn't available here. Type your command instead."); return; }
+  if(!SR){ say("Voice input isn't available here. Open me in Safari, or type your command."); return; }
+  if(rec){ try { rec.stop(); } catch(e){} return; }
   speechSynthesis.cancel();
-  const r = new SR(); r.lang = "en-US";
-  r.onstart = () => { listening = true; };
-  r.onend = () => { listening = false; };
-  r.onresult = e => handle(e.results[0][0].transcript);
-  r.onerror = () => { listening = false; addLine("Jarvis", "I didn't catch that. You can also type."); };
-  r.start();
+  let heard = "";
+  const r = new SR(); rec = r;
+  r.lang = "en-US"; r.continuous = true; r.interimResults = true;
+  const stopSoon = ms => { clearTimeout(recTimer); recTimer = setTimeout(() => { try { r.stop(); } catch(e){} }, ms); };
+  r.onstart = () => { listening = true; setStatus("Listening..."); stopSoon(8000); };
+  r.onresult = e => {
+    heard = ""; for(let i = 0; i < e.results.length; i++) heard += e.results[i][0].transcript + " ";
+    setStatus(heard.trim()); stopSoon(1800);
+  };
+  r.onerror = e => {
+    if(e.error === "not-allowed" || e.error === "service-not-allowed") say("I need microphone permission. Check Safari's website settings, and make sure Dictation is on in Settings, General, Keyboard.");
+  };
+  r.onend = () => {
+    listening = false; clearTimeout(recTimer); rec = null; setStatus("");
+    const t = heard.trim();
+    if(t) handle(t); else addLine("Jarvis", "I didn't hear anything. Tap the reactor and start talking right away, or type below.");
+  };
+  try { r.start(); } catch(e){ rec = null; listening = false; }
 };
 
 renderAll(); renderQuiz(); loadWeather();
