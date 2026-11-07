@@ -100,6 +100,7 @@ nav b{display:block;font-size:19px;margin-bottom:2px;font-weight:400}
   <div id="weather">Checking the weather...</div>
   <div id="timer"></div>
   <div id="log"></div>
+  <button class="chip" id="hear" style="display:none;margin:4px auto">Tap to hear Jarvis</button>
   <div class="chips" id="chips"></div>
   <form id="form" class="row2" style="flex-wrap:nowrap">
     <input id="cmd" placeholder="Or type to Jarvis here" autocomplete="off">
@@ -415,6 +416,7 @@ function loadWeather(){
 }
 
 /* ---------- voice out ---------- */
+let blockedText = "";
 function speak(text){
   speechSynthesis.cancel();
   const voices = speechSynthesis.getVoices();
@@ -424,9 +426,12 @@ function speak(text){
     const u = new SpeechSynthesisUtterance(s);
     if(v) u.voice = v;
     u.lang = "en-GB"; u.rate = 0.9; u.pitch = 0.85;
+    u.onstart = () => { $("hear").style.display = "none"; };
+    u.onerror = e => { if(e.error === "not-allowed"){ blockedText = text; $("hear").style.display = "block"; } };
     speechSynthesis.speak(u);
   });
 }
+$("hear").onclick = () => { $("hear").style.display = "none"; speak(blockedText); };
 let listening = false;
 setInterval(() => $("reactor").classList.toggle("active", speechSynthesis.speaking || listening), 300);
 
@@ -726,6 +731,13 @@ $("reactor").onclick = () => {
 };
 
 renderAll(); renderQuiz(); loadWeather();
+
+/* ---------- Action Button: Shortcuts can open Jarvis with ?say=what you said ---------- */
+(function(){
+  let q = null;
+  try { q = new URLSearchParams(location.search).get("say"); } catch(e){}
+  if(q){ try { history.replaceState(null, "", location.pathname); } catch(e){} setTimeout(() => handle(q), 700); }
+})();
 </script>
 </body>
 </html>
