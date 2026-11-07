@@ -17,7 +17,6 @@ section.on{display:block}
 h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:22px 0 8px}
 .center{text-align:center}
 
-/* reactor */
 .reactor{position:relative;width:170px;height:170px;margin:4px auto 2px;cursor:pointer}
 .reactor div{position:absolute;border-radius:50%}
 .ring1{inset:0;border:2px solid rgba(127,219,255,.5);box-shadow:0 0 24px rgba(43,184,255,.45),inset 0 0 24px rgba(43,184,255,.25)}
@@ -70,7 +69,6 @@ li.empty{color:var(--dim);justify-content:center}
 .a{font-size:18px;color:var(--cy);margin:10px 0}
 .btnrow{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
 
-/* calendar */
 .calhead{display:flex;align-items:center;justify-content:space-between;margin:6px 0 10px}
 .calhead .t{font-size:18px;font-weight:500}
 .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
@@ -180,7 +178,6 @@ function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
 function pad(n){ return String(n).padStart(2, "0"); }
 function cap(t){ return t ? t.charAt(0).toUpperCase() + t.slice(1) : t; }
 
-/* ---------- saved data (stays on this phone) ---------- */
 function load(k, fallback){ try { const v = JSON.parse(localStorage.getItem(k)); return v === null ? fallback : v; } catch(e){ return fallback; } }
 function save(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
 let tasks = load("tasks", []).map(x => typeof x === "string" ? {t: x, d: ""} : x);
@@ -192,7 +189,6 @@ let cardsText = load("cardsText", "");
 let doneLog = load("doneLog", []);
 let userName = load("name", "John");
 
-/* ---------- dates ---------- */
 function dkey(d){ d = d || new Date(); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
 function keyToDate(k){ const p = k.split("-").map(Number); return new Date(p[0], p[1] - 1, p[2], 12); }
 function daysUntil(k){
@@ -252,7 +248,6 @@ function cleanTask(t){
   return t;
 }
 
-/* ---------- screens ---------- */
 function show(tab){
   document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id === "tab-" + tab));
   document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
@@ -260,7 +255,6 @@ function show(tab){
 }
 document.querySelectorAll("nav button").forEach(b => b.onclick = () => show(b.dataset.tab));
 
-/* ---------- tasks ---------- */
 function sortedTasks(){
   const k = x => x.d || "9999";
   return tasks.map((x, i) => ({x: x, i: i})).sort((a, b) => k(a.x) < k(b.x) ? -1 : k(a.x) > k(b.x) ? 1 : a.i - b.i).map(o => o.x);
@@ -290,16 +284,21 @@ function renderTasks(){
 }
 
 /* ---------- Google Classroom import (paste in) ---------- */
+/* Handles both "Due Nov 12" lines and Classroom's phone format like "Tuesday 11:59 PM" */
+function isDateLine(l){
+  if(/^due\b/i.test(l)) return true;
+  if(l.length > 40) return false;
+  return /^(today|tomorrow|yesterday|(sun|mon|tues|wednes|thurs|fri|satur)day|(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.? \d)/i.test(l);
+}
 function importClassroom(text){
   const lines = text.split("\n").map(x => x.trim()).filter(Boolean);
-  const isDue = l => /^due\b/i.test(l);
   const skip = l => /^(assigned|missing|done|turned in|done late|graded|posted|view|open|to-do|to do|this week|next week|later|earlier|no due date|all classes|all|not turned in|ungraded)$/i.test(l);
-  const clean = l => !isDue(l) && !skip(l);
+  const clean = l => !isDateLine(l) && !skip(l);
   let added = 0, dups = 0, skipped = 0;
   lines.forEach((l, i) => {
-    if(!isDue(l)) return;
+    if(!isDateLine(l)) return;
     const raw = l.replace(/^due\s*(date)?:?\s*/i, "").toLowerCase().replace(/,/g, " ").replace(/\b\d{1,2}:\d{2} ?(?:am|pm)?\b/g, " ").replace(/\s+/g, " ").trim();
-    const dd = parseDate(raw);
+    const dd = parseDate(raw.replace(/^(?:sun|mon|tues|wednes|thurs|fri|satur)day /, "")) || parseDate(raw);
     const l1 = i >= 1 && clean(lines[i - 1]) ? lines[i - 1] : "", l2 = i >= 2 && clean(lines[i - 2]) ? lines[i - 2] : "";
     const title = (l1 && l2 ? l2 + " - " + l1 : l1).slice(0, 90);
     if(!dd || !title){ skipped++; return; }
@@ -311,7 +310,7 @@ function importClassroom(text){
 }
 $("gcImport").onclick = () => {
   const r = importClassroom($("gcText").value);
-  let msg = r.added ? "Added " + r.added + " assignment" + (r.added === 1 ? "" : "s") + " to your calendar." : "I couldn't find any new due dates. Make sure the pasted text has lines like Due Nov 12.";
+  let msg = r.added ? "Added " + r.added + " assignment" + (r.added === 1 ? "" : "s") + " to your calendar." : "I couldn't find any new due dates. Make sure the pasted text has date lines like Due Nov 12 or Tuesday 11:59 PM.";
   if(r.dups) msg += " Skipped " + r.dups + " you already have.";
   if(r.skipped) msg += " Couldn't read " + r.skipped + ".";
   $("gcMsg").textContent = msg;
@@ -580,25 +579,20 @@ function handle(raw){
   let m;
   const mood = lastQ; lastQ = "";
 
-  /* safety first */
   if(/(kill myself|suicid|want to die|end my life|hurt myself|self.?harm)/.test(s0)){
     return say("I'm really sorry you're feeling that way, " + userName + ". You don't have to handle it alone. Please talk to someone you trust right now, or call or text 988 if you're in the US.");
   }
 
-  /* quiet */
   if(/^(stop|quiet|be quiet|stop talking|silence|enough|shut up|never mind|nevermind)$/.test(s0) || /^(stop|quiet|enough)$/.test(s)){ return; }
 
-  /* answering "how are you" */
   if(mood === "mood"){
     if(/\b(good|great|fine|well|awesome|amazing|happy|not bad|pretty good|doing good|okay|ok)\b/.test(s0) && !/not good|not great|not okay/.test(s0)) return say(pick(["Glad to hear it, " + userName + ". Let's keep the momentum going.", "Excellent. That's the kind of energy I like.", "Good to hear. What's the plan?"]));
     if(/\b(tired|bad|stressed|sad|rough|not good|terrible|exhausted|anxious|overwhelmed|meh|not great|not okay)\b/.test(s0)) return say("Sorry to hear that, " + userName + ". One thing at a time. Want me to line up the easiest task first, or start a five minute break timer?");
   }
 
-  /* greeting / name */
   if(!s){ return say(/\b(hi|hello|hey|yo|sup)\b/.test(s0) ? pick([getGreeting() + " How can I help?", "Hello, " + userName + ". What can I do for you?", "Hey " + userName + ". What's on your mind?"]) : pick(["Yes, " + userName + "? I'm listening.", "At your service.", "I'm here. What do you need?"])); }
   if((m = s0.match(/(?:my name is|call me|i am called|i go by) ([a-z' -]{1,20})$/))){ userName = cap(m[1].trim()); save("name", userName); updateClock(); return say("Got it. I'll call you " + userName + "."); }
 
-  /* small talk */
   if(/\b(how are you|how'?s it going|how you doing|how do you feel|you good|you okay|how have you been)\b/.test(s0)){ lastQ = "mood"; return say(pick(["All systems running smoothly, " + userName + ". How are you doing?", "Running at full power. How about you?", "Never better. I don't get tired, which helps. How are you?"])); }
   if(/\b(what'?s up|sup|wassup|what are you up to|what'?s good|what'?s new)\b/.test(s0)){ lastQ = "mood"; return say(pick(["Just keeping an eye on your day, " + userName + ". What's up with you?", "Monitoring your schedule and waiting for orders. What's going on?", "Not much, just ready to help. What do you need?"])); }
   if(/\b(who are you|what are you|your name|are you real|are you an? (ai|robot|bot)|who made you|who built you)\b/.test(s0)) return say("I'm Jarvis, your personal assistant, built right here on your phone with you, " + userName + ". I run on your tasks, calendar, timers and a lot of rules, no cloud brain yet.");
@@ -616,13 +610,11 @@ function handle(raw){
   if(/\b(i'?m|im|i am|i feel) (so |really |very )?(tired|stressed|overwhelmed|anxious|exhausted|sad|burnt out|burned out)\b/.test(s0)) return say("That's rough, " + userName + ". Take a breath. Pick one small thing, or want me to start a five minute break timer?");
   if(/\b(what can you do|help|commands|what do you do)\b/.test(s0)) return say("I can manage your tasks and calendar, set timers, take notes, track habits, quiz you, check the weather, do math, and chat. Try: add essay to my list for Friday. Or: what's on my calendar tomorrow. Or: start a focus session.");
 
-  /* navigation */
   if((m = s.match(/^(?:open|go to|show me|switch to) (?:the |my )?(home|tasks?|to[- ]?do|calendar|notes|habits|study)(?: tab| page| screen)?$/))){
     const w = m[1]; show(/task|to/.test(w) ? "tasks" : w); return say("Opening " + w + ".");
   }
   if(/\b(quiz me|study me|start (a )?quiz|test me)\b/.test(s)){ cardsText = $("cardText").value || cardsText; if(startQuiz(parseCards(cardsText))) addLine("Jarvis", "Starting your quiz."); return; }
 
-  /* timers and focus */
   if(/\b(focus|pomodoro|study session|work session)\b/.test(s) && !/(what|how|tell)/.test(s)){
     startTimer(25 * 60, "Focus session over. Great work, " + userName + ". Take a five minute break."); return say("Focus session started. Twenty five minutes. No distractions. Go.");
   }
@@ -635,7 +627,6 @@ function handle(raw){
     return say((label ? "Okay, I'll remind you in " : "Timer set for ") + n + " " + (u === "h" ? "hour" : u === "m" ? "minute" : "second") + (n === 1 ? "" : "s") + ".");
   }
 
-  /* habits */
   if((m = s.match(/^(?:add|new|start|create) (?:a )?habit (?:of |called )?(.+)$/))){ habits.push({n: cap(m[1]), d: []}); save("habits", habits); renderAll(); return say("New habit added: " + m[1] + "."); }
   if((m = s.match(/^(?:i )?(?:did|practiced|worked on|completed my|finished my|just did) (.+)$/))){
     const h = habits.find(x => x.n.toLowerCase().includes(m[1]) || m[1].includes(x.n.toLowerCase()));
@@ -645,20 +636,17 @@ function handle(raw){
     return say(habits.length ? habits.map(h => h.n + ": " + streak(h) + " day streak" + (h.d.includes(dkey()) ? ", done today" : ", not done yet")).join(". ") : "You have no habits yet. Say add habit, then the name.");
   }
 
-  /* math and countdowns to dates */
   const mathAns = tryMath(s); if(mathAns !== null) return say("That's " + mathAns + ".");
   if((m = s.match(/(?:how many days|how long|how much time) (?:until|till|to|before) (.+)$/))){
     const dd = parseDate(m[1]);
     if(dd){ const n = daysUntil(dd.d); return say(n === 0 ? "That's today." : n === 1 ? "That's tomorrow." : n < 0 ? "That was " + Math.abs(n) + " days ago." : "That's in " + n + " days."); }
   }
 
-  /* what should I do */
   if(/(what should i do|what do i do|what'?s next|what do i need to do first|where do i start|plan my (day|homework)|help me (get started|start|focus)|tell me what to do)/.test(s)){
     const next = sortedTasks()[0];
     return say(next ? "Start with " + next.t + (next.d ? ", due " + dateWords(next.d) : "") + ". Say focus and I'll run a twenty five minute session." : "Nothing on your list. Take a breath, or add something and I'll plan it.");
   }
 
-  /* adding tasks and calendar items */
   const dd = parseDate(s), base = dd ? dd.rest : s, when = dd ? dd.d : "";
   if(!/^(?:what|when|how|read|show|tell|any|do i|is there|are there)\b/.test(s)){
     if((m = base.match(/^(?:add|put|create|make|schedule|write down|set up) (?:a |an |the |my )?(?:task |reminder |event |to[- ]?do )?(.+?)(?: (?:to|on|onto|in|for|into) (?:my |the )?(?:to[- ]?do|tasks?|list|calendar|schedule|agenda)(?: list)?)?$/)) ||
@@ -669,29 +657,24 @@ function handle(raw){
     }
   }
 
-  /* checking things off */
   if((m = s.match(/^(?:mark|check) (.+?) (?:as )?(?:done|complete|completed|finished)$/)) || (m = s.match(/^(?:done with|done|finished|finish|complete|completed|check off|cross off|remove|delete|i finished|i'?m done with|i did|i completed) (.+)$/))){
     const r = completeByName(m[1]); return say(r || "I couldn't find " + m[1] + " on your list.");
   }
   if(/\bclear (my |the |all )?(to[- ]?do|tasks|list)/.test(s)){ tasks = []; save("tasks", tasks); renderAll(); return say("Your list is cleared."); }
 
-  /* calendar and list questions */
   if(/\b(calendar|schedule|agenda|due|coming up|deadline|deadlines|homework|plans|what do i have|anything on)\b/.test(s) && /^(what|when|how|read|show|tell|any|do i|is there|are there|check|list|give|whats)/.test(s)) return agenda(s);
   if(/(what|read|show|tell|check|list).*(list|tasks|to[- ]?do)/.test(s)) return agenda(s);
   if(/^(?:my )?(calendar|schedule|agenda)$/.test(s)) return agenda(s);
 
-  /* notes */
   if(/\bclear (my |the |all )?notes/.test(s)){ notes = []; save("notes", notes); renderAll(); return say("Notes cleared."); }
   if(/(read|show|what|check).*notes/.test(s)) return say(notes.length ? listWords(notes) : "You have no notes yet.");
   if((m = s.match(/^(?:take a note|make a note|note to self|note|remember|jot down|write down)(?: that)? (.+)$/))){ notes.push(cap(m[1])); save("notes", notes); renderAll(); return say("Noted."); }
 
-  /* info */
   if(/what.*(time|clock)|current time|what time/.test(s)) return say("It is " + timeText() + ".");
   if(/what.*(date|day|today)|today'?s date/.test(s)) return say("Today is " + dateText() + ".");
   if(/weather|temperature|how hot|how cold|raining|rain today|do i need (a |an )?(jacket|umbrella|coat)/.test(s)) return say(weatherText || "I don't have the weather yet.");
   if(/\b(brief|catch me up|morning report|daily briefing|what'?s my day)\b|^good (morning|afternoon|evening)$/.test(s)) return say(brief());
 
-  /* fallback: be friendly, offer a search */
   say(pick(["That one's beyond my free brain, " + userName + ", but I can search the web for you.", "I'm not sure how to do that yet, " + userName + ". I can search for it, or you can say help.", "Hmm, I don't know that one. Tap the link and I'll send you to a search."]));
   addLink("Search the web for: " + raw, "https://www.google.com/search?q=" + encodeURIComponent(raw));
 }
