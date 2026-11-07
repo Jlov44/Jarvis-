@@ -16,7 +16,6 @@ section{display:none;max-width:560px;margin:0 auto}
 section.on{display:block}
 h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:22px 0 8px}
 .center{text-align:center}
-
 .reactor{position:relative;width:170px;height:170px;margin:4px auto 2px;cursor:pointer}
 .reactor div{position:absolute;border-radius:50%}
 .ring1{inset:0;border:2px solid rgba(127,219,255,.5);box-shadow:0 0 24px rgba(43,184,255,.45),inset 0 0 24px rgba(43,184,255,.25)}
@@ -29,23 +28,20 @@ h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)
 @keyframes pulse{50%{transform:scale(1.12);box-shadow:0 0 60px 18px rgba(43,184,255,.9)}}
 .tap{font-size:12px;color:var(--dim)}
 #status{min-height:20px;font-size:14px;color:var(--cy);margin:2px 0 4px}
-
 #greeting{font-size:20px;margin:4px 0 0;font-weight:500}
 #time{font-size:50px;font-weight:200;letter-spacing:.02em;margin-top:2px}
 #date{font-size:15px;color:var(--dim)}
 #weather{font-size:14px;margin:8px 0 2px;min-height:20px}
-
 form.row2{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
-input,textarea{flex:1;min-width:0;width:100%;background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:16px;font-family:inherit}
-form.row2 input{width:auto}
+input,textarea,select{flex:1;min-width:0;width:100%;background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:16px;font-family:inherit}
+form.row2 input,form.row2 select{width:auto}
 textarea{min-height:150px;resize:vertical}
 button.b{background:#103559;color:var(--cy);border:1px solid var(--cy2);border-radius:12px;padding:12px 18px;font-size:16px}
 button.b:active{background:#1a4a7a}
 button.ghost{background:none;border:1px solid var(--line);color:var(--dim)}
-
+.menu button{display:block;width:100%;text-align:left;margin:8px 0}
 .chips{display:flex;gap:8px;overflow-x:auto;padding:6px 0;-webkit-overflow-scrolling:touch}
 .chip{flex:none;background:var(--panel);border:1px solid var(--line);color:var(--cy);border-radius:999px;padding:8px 14px;font-size:14px}
-
 #log{text-align:left;max-height:210px;overflow-y:auto;padding:4px 2px}
 .you{text-align:right;margin:8px 0}
 .you span{display:inline-block;background:#12304d;border-radius:14px 14px 4px 14px;padding:8px 12px;max-width:85%}
@@ -53,22 +49,20 @@ button.ghost{background:none;border:1px solid var(--line);color:var(--dim)}
 .jv span,.jv a{display:inline-block;background:var(--panel);border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:8px 12px;max-width:85%}
 .jv a{color:var(--cy);text-decoration:none}
 #timer{font-size:28px;font-weight:300;min-height:34px;text-align:center;color:var(--cy)}
-
 ul{list-style:none;padding:0;margin:0}
 li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin:7px 0;display:flex;align-items:center;gap:12px}
 li.empty{color:var(--dim);justify-content:center}
 .chk{width:22px;height:22px;border-radius:50%;border:2px solid var(--cy2);flex:none}
-.chk.done{background:var(--cy2);box-shadow:0 0 10px var(--cy2)}
 .grow{flex:1}
 .sub{font-size:13px;color:var(--dim)}
 .late{color:#ff8a8a}
 .x{background:none;border:0;color:var(--dim);font-size:20px;padding:0 4px}
 .hint{font-size:12px;color:var(--dim);margin:2px 0 0}
+.out{font-size:16px;color:var(--cy);margin:8px 0;min-height:22px}
 .qbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 16px;text-align:center;margin:12px 0}
 .q{font-size:22px;margin-bottom:12px}
 .a{font-size:18px;color:var(--cy);margin:10px 0}
 .btnrow{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
-
 .calhead{display:flex;align-items:center;justify-content:space-between;margin:6px 0 10px}
 .calhead .t{font-size:18px;font-weight:500}
 .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
@@ -79,7 +73,6 @@ li.empty{color:var(--dim);justify-content:center}
 .day.sel{background:#103559}
 .dots{display:flex;gap:2px;margin-top:3px;height:5px}
 .dots i{width:5px;height:5px;border-radius:50%;background:var(--cy)}
-
 nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:rgba(8,16,30,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
 nav button{flex:1;background:none;border:0;color:var(--dim);padding:10px 0 8px;font-size:10px}
 nav button.on{color:var(--cy)}
@@ -115,7 +108,6 @@ nav b{display:block;font-size:19px;margin-bottom:2px;font-weight:400}
   </form>
   <ul id="tasks"></ul>
   <div class="hint">Add a date to put it on your calendar. Tap a task to check it off.</div>
-
   <h2>Import from Google Classroom</h2>
   <textarea id="gcText" placeholder="Paste your Classroom assignments here" style="min-height:110px"></textarea>
   <div class="btnrow"><button class="b" id="gcImport">Import to my calendar</button></div>
@@ -143,13 +135,6 @@ nav b{display:block;font-size:19px;margin-bottom:2px;font-weight:400}
   <div class="hint">Tap a note to delete it.</div>
 </section>
 
-<section id="tab-habits">
-  <h2>Habits</h2>
-  <form id="habitForm" class="row2"><input id="habitIn" placeholder="New habit (Read 20 min...)" autocomplete="off"><button class="b" type="submit">Add</button></form>
-  <ul id="habits"></ul>
-  <div class="hint">Tap the circle when you do it today. Keep the streak going.</div>
-</section>
-
 <section id="tab-study">
   <h2>Study helper</h2>
   <div id="quizArea"></div>
@@ -162,13 +147,123 @@ nav b{display:block;font-size:19px;margin-bottom:2px;font-weight:400}
   <div class="hint" style="text-align:center;margin-top:8px">Type a question or term, then a colon, then the answer.</div>
 </section>
 
+<section id="tab-more">
+  <h2>More</h2>
+  <div class="menu">
+    <button class="b" data-go="schedule">Class schedule</button>
+    <button class="b" data-go="exams">Exam countdowns</button>
+    <button class="b" data-go="grades">Grades and GPA</button>
+    <button class="b" data-go="tools">Converter, tip, read aloud</button>
+    <button class="b" data-go="gps">GPS and directions</button>
+    <button class="b" data-go="help">Assignment help</button>
+  </div>
+</section>
+
+<section id="tab-schedule">
+  <button class="b ghost" data-go="more">&lsaquo; More</button>
+  <h2>Class schedule</h2>
+  <form id="schedForm" class="row2">
+    <input id="schName" placeholder="Class name" autocomplete="off">
+    <input id="schTime" type="time" style="flex:0 0 120px">
+    <select id="schDays">
+      <option value="1,2,3,4,5">Every weekday</option>
+      <option value="1,3,5">Mon Wed Fri</option>
+      <option value="2,4">Tue Thu</option>
+      <option value="1">Monday</option>
+      <option value="2">Tuesday</option>
+      <option value="3">Wednesday</option>
+      <option value="4">Thursday</option>
+      <option value="5">Friday</option>
+    </select>
+    <button class="b" type="submit">Add</button>
+  </form>
+  <ul id="schedList"></ul>
+  <div class="hint">Ask Jarvis: what class is next?</div>
+</section>
+
+<section id="tab-exams">
+  <button class="b ghost" data-go="more">&lsaquo; More</button>
+  <h2>Exam countdowns</h2>
+  <form id="examForm" class="row2">
+    <input id="exName" placeholder="Exam name" autocomplete="off">
+    <input id="exDate" type="date" style="flex:0 0 150px">
+    <button class="b" type="submit">Add</button>
+  </form>
+  <ul id="examList"></ul>
+  <div class="hint">Tap an exam to delete it. Ask Jarvis: when is my next exam?</div>
+</section>
+
+<section id="tab-grades">
+  <button class="b ghost" data-go="more">&lsaquo; More</button>
+  <h2>What do I need on the final</h2>
+  <input id="grCur" type="number" inputmode="decimal" placeholder="Current grade % (like 88)" style="margin-bottom:8px">
+  <input id="grW" type="number" inputmode="decimal" placeholder="Final's weight % (like 20)" style="margin-bottom:8px">
+  <input id="grWant" type="number" inputmode="decimal" placeholder="Grade you want % (like 90)">
+  <div class="btnrow"><button class="b" id="grCalc">Calculate</button></div>
+  <div class="out" id="grOut"></div>
+  <h2>GPA</h2>
+  <input id="gpaIn" placeholder="Letter grades like A B+ A- B" autocomplete="off">
+  <div class="btnrow"><button class="b" id="gpaGo">Get my GPA</button></div>
+  <div class="out" id="gpaOut"></div>
+  <div class="hint">Unweighted 4.0 scale.</div>
+</section>
+
+<section id="tab-tools">
+  <button class="b ghost" data-go="more">&lsaquo; More</button>
+  <h2>Unit converter</h2>
+  <input id="cvVal" type="number" inputmode="decimal" placeholder="Amount" style="margin-bottom:8px">
+  <div style="display:flex;gap:8px"><select id="cvFrom"></select><select id="cvTo"></select></div>
+  <div class="out" id="cvOut"></div>
+  <h2>Tip splitter</h2>
+  <input id="tpBill" type="number" inputmode="decimal" placeholder="Bill ($)" style="margin-bottom:8px">
+  <div style="display:flex;gap:8px"><input id="tpPct" type="number" inputmode="decimal" placeholder="Tip %" value="20"><input id="tpN" type="number" inputmode="numeric" placeholder="People" value="1"></div>
+  <div class="out" id="tpOut"></div>
+  <h2>Read aloud</h2>
+  <textarea id="raText" placeholder="Paste a chapter or article and Jarvis reads it to you"></textarea>
+  <div class="btnrow"><button class="b" id="raGo">Read it</button><button class="b ghost" id="raStop">Stop</button></div>
+</section>
+
+<section id="tab-gps">
+  <button class="b ghost" data-go="more">&lsaquo; More</button>
+  <h2>GPS</h2>
+  <iframe id="gpsMap" title="Map" style="width:100%;height:210px;border:1px solid var(--line);border-radius:12px;display:none" loading="lazy"></iframe>
+  <div class="out" id="gpsMsg">Tap Find me to see where you are.</div>
+  <div class="sub" id="gpsCoords"></div>
+  <div class="out" id="gpsSpeed"></div>
+  <div class="btnrow">
+    <button class="b" id="gpsFind">Find me</button>
+    <button class="b" id="gpsShare">Share</button>
+    <button class="b ghost" id="gpsLive">Live tracking</button>
+  </div>
+  <h2>Directions</h2>
+  <form id="gpsForm" class="row2"><input id="gpsDest" placeholder="Where to?" autocomplete="off"><button class="b" type="submit">Go</button></form>
+  <div class="chips" id="gpsQuick"></div>
+  <h2>Saved spots</h2>
+  <div class="btnrow">
+    <button class="b" id="saveParkBtn">Save parking</button>
+    <button class="b ghost" id="goParkBtn">Go to my car</button>
+    <button class="b" id="saveHomeBtn">Save home</button>
+    <button class="b ghost" id="goHomeBtn">Go home</button>
+  </div>
+  <div class="hint" style="text-align:center;margin-top:8px">Directions open in Apple Maps. Allow location for this site in Safari.</div>
+</section>
+
+<section id="tab-help">
+  <button class="b ghost" data-go="more">&lsaquo; More</button>
+  <h2>Assignment help</h2>
+  <textarea id="hwText" placeholder="Paste your assignment here, or load a text file"></textarea>
+  <input id="hwFile" type="file" accept=".txt,text/plain" style="margin-top:8px">
+  <div class="btnrow"><button class="b" id="hwGo">Get help from Claude</button></div>
+  <div class="hint" id="hwMsg" style="text-align:center;margin-top:8px">I copy it for you, then open Claude. Paste it into the chat.</div>
+</section>
+
 <nav>
   <button data-tab="home" class="on"><b>&#9673;</b>Jarvis</button>
   <button data-tab="tasks"><b>&#10003;</b>Tasks</button>
   <button data-tab="calendar"><b>&#9638;</b>Calendar</button>
   <button data-tab="notes"><b>&#9998;</b>Notes</button>
-  <button data-tab="habits"><b>&#8635;</b>Habits</button>
   <button data-tab="study"><b>&#10022;</b>Study</button>
+  <button data-tab="more"><b>&#9776;</b>More</button>
 </nav>
 
 <script>
@@ -184,10 +279,12 @@ let tasks = load("tasks", []).map(x => typeof x === "string" ? {t: x, d: ""} : x
 const oldDues = load("dues", []);
 if(oldDues.length){ oldDues.forEach(x => tasks.push({t: x.n, d: x.d})); save("tasks", tasks); try { localStorage.removeItem("dues"); } catch(e){} }
 let notes = load("notes", []);
-let habits = load("habits", []);
 let cardsText = load("cardsText", "");
 let doneLog = load("doneLog", []);
 let userName = load("name", "John");
+let sched = load("sched", []);
+let exams = load("exams", []);
+let spots = load("spots", {});
 
 function dkey(d){ d = d || new Date(); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
 function keyToDate(k){ const p = k.split("-").map(Number); return new Date(p[0], p[1] - 1, p[2], 12); }
@@ -202,12 +299,6 @@ function dateWords(k){
   const n = daysUntil(k);
   if(n === 0) return "today"; if(n === 1) return "tomorrow"; if(n === -1) return "yesterday";
   return keyToDate(k).toLocaleDateString([], {weekday: "long", month: "long", day: "numeric"});
-}
-function streak(h){
-  let n = 0; const d = new Date();
-  if(!h.d.includes(dkey(d))) d.setDate(d.getDate() - 1);
-  while(h.d.includes(dkey(d))){ n++; d.setDate(d.getDate() - 1); }
-  return n;
 }
 
 const WD = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
@@ -250,10 +341,12 @@ function cleanTask(t){
 
 function show(tab){
   document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id === "tab-" + tab));
-  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
+  const nb = document.querySelector('nav button[data-tab="' + tab + '"]') ? tab : "more";
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === nb));
   window.scrollTo(0, 0);
 }
 document.querySelectorAll("nav button").forEach(b => b.onclick = () => show(b.dataset.tab));
+document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => show(b.dataset.go));
 
 function sortedTasks(){
   const k = x => x.d || "9999";
@@ -283,8 +376,6 @@ function renderTasks(){
   sortedTasks().forEach(x => ul.appendChild(taskRow(x)));
 }
 
-/* ---------- Google Classroom import (paste in) ---------- */
-/* Handles both "Due Nov 12" lines and Classroom's phone format like "Tuesday 11:59 PM" */
 function isDateLine(l){
   if(/^due\b/i.test(l)) return true;
   if(l.length > 40) return false;
@@ -317,7 +408,6 @@ $("gcImport").onclick = () => {
   if(r.added){ $("gcText").value = ""; say("Imported " + r.added + " assignment" + (r.added === 1 ? "" : "s") + " from Classroom."); }
 };
 
-/* ---------- calendar ---------- */
 let calY = new Date().getFullYear(), calM = new Date().getMonth(), calSel = dkey();
 function renderCal(){
   const first = new Date(calY, calM, 1), dim = new Date(calY, calM + 1, 0).getDate();
@@ -346,7 +436,6 @@ $("calNext").onclick = () => { calM++; if(calM > 11){ calM = 0; calY++; } render
 $("calToday").onclick = () => { const n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); calSel = dkey(); renderCal(); };
 $("calForm").onsubmit = e => { e.preventDefault(); const v = $("calIn").value.trim(); if(v) addTask(v, calSel); $("calIn").value = ""; };
 
-/* ---------- notes and habits ---------- */
 function renderNotes(){
   const ul = $("notes"); ul.innerHTML = "";
   if(!notes.length) ul.appendChild(el("li", "empty", "No notes yet."));
@@ -356,30 +445,187 @@ function renderNotes(){
     ul.appendChild(li);
   });
 }
-function renderHabits(){
-  const ul = $("habits"); ul.innerHTML = "";
-  if(!habits.length) ul.appendChild(el("li", "empty", "No habits yet."));
-  habits.forEach((h, i) => {
-    const li = el("li"); const done = h.d.includes(dkey());
-    const c = el("span", "chk" + (done ? " done" : "")); c.onclick = () => toggleHabit(h);
-    const g = el("span", "grow"); g.appendChild(el("div", "", h.n)); g.appendChild(el("div", "sub", streak(h) + " day streak"));
+
+function fmt12(t){ const p = t.split(":").map(Number); return ((p[0] + 11) % 12 + 1) + ":" + pad(p[1]) + (p[0] < 12 ? " AM" : " PM"); }
+function classesOn(dow){ return sched.filter(c => c.days.includes(dow)).sort((a, b) => a.t < b.t ? -1 : 1); }
+function nextClass(){
+  const now = new Date(), nt = pad(now.getHours()) + ":" + pad(now.getMinutes());
+  for(let i = 0; i < 8; i++){
+    const list = classesOn((now.getDay() + i) % 7).filter(c => i > 0 || c.t > nt);
+    if(list.length) return {c: list[0], i: i};
+  }
+  return null;
+}
+function classSpeech(nc){
+  const d = (new Date().getDay() + nc.i) % 7;
+  return nc.c.n + (nc.i === 0 ? " today at " : nc.i === 1 ? " tomorrow at " : " on " + cap(WD[d]) + " at ") + fmt12(nc.c.t);
+}
+const DAYN = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+function renderSched(){
+  const ul = $("schedList"); ul.innerHTML = "";
+  if(!sched.length) ul.appendChild(el("li", "empty", "No classes yet."));
+  sched.slice().sort((a, b) => a.t < b.t ? -1 : 1).forEach(c => {
+    const li = el("li"); const g = el("span", "grow");
+    g.appendChild(el("div", "", c.n));
+    g.appendChild(el("div", "sub", fmt12(c.t) + "  " + (c.days.length === 5 ? "Every weekday" : c.days.map(d => DAYN[d]).join(" "))));
     const x = el("button", "x", "\u00d7");
-    x.onclick = () => { if(confirm("Delete " + h.n + "?")){ habits.splice(i, 1); save("habits", habits); renderAll(); } };
-    li.appendChild(c); li.appendChild(g); li.appendChild(x); ul.appendChild(li);
+    x.onclick = () => { sched = sched.filter(y => y !== c); save("sched", sched); renderAll(); };
+    li.appendChild(g); li.appendChild(x); ul.appendChild(li);
   });
 }
-function toggleHabit(h){
-  const k = dkey(), i = h.d.indexOf(k);
-  if(i >= 0) h.d.splice(i, 1); else h.d.push(k);
-  save("habits", habits); renderAll();
+$("schedForm").onsubmit = e => {
+  e.preventDefault();
+  const n = $("schName").value.trim(), t = $("schTime").value;
+  if(!n || !t) return;
+  sched.push({n: cap(n), t: t, days: $("schDays").value.split(",").map(Number)});
+  save("sched", sched); $("schName").value = ""; renderAll();
+};
+
+function nextExam(){ return exams.filter(x => x.d >= dkey()).sort((a, b) => a.d < b.d ? -1 : 1)[0]; }
+function renderExams(){
+  const ul = $("examList"); ul.innerHTML = "";
+  if(!exams.length) ul.appendChild(el("li", "empty", "No exams yet."));
+  exams.slice().sort((a, b) => a.d < b.d ? -1 : 1).forEach(x => {
+    const li = el("li"); const g = el("span", "grow"); const n = daysUntil(x.d);
+    g.appendChild(el("div", "", x.n));
+    g.appendChild(el("div", "sub" + (n < 0 ? " late" : ""), dueLabel(n)));
+    li.appendChild(g);
+    li.onclick = () => { exams = exams.filter(y => y !== x); save("exams", exams); renderAll(); };
+    ul.appendChild(li);
+  });
 }
-function renderAll(){ renderTasks(); renderCal(); renderNotes(); renderHabits(); }
+$("examForm").onsubmit = e => {
+  e.preventDefault();
+  const n = $("exName").value.trim(), d = $("exDate").value;
+  if(!n || !d) return;
+  exams.push({n: cap(n), d: d}); save("exams", exams);
+  $("exName").value = ""; $("exDate").value = ""; renderAll();
+};
+
+$("grCalc").onclick = () => {
+  const c = parseFloat($("grCur").value), w = parseFloat($("grW").value), g = parseFloat($("grWant").value);
+  if([c, w, g].some(isNaN) || w <= 0 || w > 100){ $("grOut").textContent = "Fill in all three numbers. The final's weight has to be between 1 and 100."; return; }
+  const need = (g - c * (1 - w / 100)) / (w / 100), best = c * (1 - w / 100) + w;
+  $("grOut").textContent = need > 100 ? "You'd need " + Math.round(need * 10) / 10 + "% on the final, which is over 100. Your best possible grade is " + Math.round(best * 10) / 10 + "%." : need <= 0 ? "You already have at least " + g + "%, even with a 0 on the final." : "You need " + Math.round(need * 10) / 10 + "% on the final.";
+};
+const GP = {"A+":4,"A":4,"A-":3.7,"B+":3.3,"B":3,"B-":2.7,"C+":2.3,"C":2,"C-":1.7,"D+":1.3,"D":1,"D-":0.7,"F":0};
+$("gpaGo").onclick = () => {
+  const tk = $("gpaIn").value.toUpperCase().split(/[\s,]+/).filter(Boolean);
+  if(!tk.length || tk.some(t => !(t in GP))){ $("gpaOut").textContent = "Enter letter grades like A B+ A-."; return; }
+  $("gpaOut").textContent = "Your GPA is " + (tk.reduce((a, t) => a + GP[t], 0) / tk.length).toFixed(2) + ".";
+};
+
+const UNITS = [
+  ["len",1609.344,"miles","mile miles mi"],["len",1000,"kilometers","kilometer kilometers km"],["len",1,"meters","meter meters m"],
+  ["len",0.3048,"feet","foot feet ft"],["len",0.0254,"inches","inch inches"],["len",0.01,"centimeters","centimeter centimeters cm"],
+  ["wt",453.59237,"pounds","pound pounds lb lbs"],["wt",1000,"kilograms","kilogram kilograms kg"],["wt",1,"grams","gram grams g"],["wt",28.349523,"ounces","ounce ounces oz"],
+  ["vol",1,"liters","liter liters l"],["vol",3.785411784,"gallons","gallon gallons gal"],["vol",0.2365882365,"cups","cup cups"],["vol",0.001,"milliliters","milliliter milliliters ml"],
+  ["tmp",0,"fahrenheit","fahrenheit f"],["tmp",1,"celsius","celsius c"]
+];
+function findUnit(w){ w = w.trim().toLowerCase(); return UNITS.findIndex(u => u[3].split(" ").includes(w)); }
+function convert(v, a, b){
+  const A = UNITS[a], B = UNITS[b];
+  if(A[0] !== B[0]) return null;
+  if(A[0] === "tmp"){ if(a === b) return v; return A[1] === 0 ? (v - 32) * 5 / 9 : v * 9 / 5 + 32; }
+  return v * A[1] / B[1];
+}
+UNITS.forEach((u, i) => { $("cvFrom").appendChild(new Option(u[2], i)); $("cvTo").appendChild(new Option(u[2], i)); });
+$("cvTo").value = "1";
+function doConvert(){
+  const v = parseFloat($("cvVal").value);
+  if(isNaN(v)){ $("cvOut").textContent = ""; return; }
+  const a = +$("cvFrom").value, b = +$("cvTo").value, r = convert(v, a, b);
+  $("cvOut").textContent = r === null ? "Those units don't match." : Math.round(r * 100) / 100 + " " + UNITS[b][2];
+}
+["input", "change"].forEach(ev => { $("cvVal").addEventListener(ev, doConvert); $("cvFrom").addEventListener(ev, doConvert); $("cvTo").addEventListener(ev, doConvert); });
+
+function tipCalc(bill, pct, n){ const tip = bill * pct / 100, total = bill + tip; return {tip: tip, total: total, each: total / n}; }
+function doTip(){
+  const b = parseFloat($("tpBill").value), p = parseFloat($("tpPct").value), n = Math.max(1, parseInt($("tpN").value, 10) || 1);
+  if(isNaN(b) || isNaN(p)){ $("tpOut").textContent = ""; return; }
+  const r = tipCalc(b, p, n);
+  $("tpOut").textContent = "Tip $" + r.tip.toFixed(2) + ", total $" + r.total.toFixed(2) + (n > 1 ? ", $" + r.each.toFixed(2) + " each" : "");
+}
+["tpBill", "tpPct", "tpN"].forEach(id => $(id).addEventListener("input", doTip));
+$("raGo").onclick = () => { const t = $("raText").value.trim(); if(t) speak(t); };
+$("raStop").onclick = () => speechSynthesis.cancel();
+
+let watchId = null, here = null;
+function getPos(){
+  return new Promise((res, rej) => {
+    if(!navigator.geolocation) return rej(new Error("no"));
+    navigator.geolocation.getCurrentPosition(res, rej, {enableHighAccuracy: true, timeout: 12000, maximumAge: 10000});
+  });
+}
+async function addressFor(lat, lon){
+  try { const d = await (await fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + lat + "&lon=" + lon)).json(); return d.display_name || ""; } catch(e){ return ""; }
+}
+function dirLink(d, raw){ return "https://maps.apple.com/?daddr=" + (raw ? d : encodeURIComponent(d)) + "&dirflg=d"; }
+function searchLink(q){ return "https://maps.apple.com/?q=" + encodeURIComponent(q); }
+async function updateHere(){
+  $("gpsMsg").textContent = "Finding you...";
+  try {
+    const p = await getPos(), lat = p.coords.latitude, lon = p.coords.longitude;
+    here = {lat: lat, lon: lon, addr: ""};
+    $("gpsCoords").textContent = lat.toFixed(5) + ", " + lon.toFixed(5) + " (within " + Math.round(p.coords.accuracy) + " m)";
+    const f = $("gpsMap");
+    f.src = "https://www.openstreetmap.org/export/embed.html?bbox=" + (lon - 0.008) + "," + (lat - 0.005) + "," + (lon + 0.008) + "," + (lat + 0.005) + "&layer=mapnik&marker=" + lat + "," + lon;
+    f.style.display = "block";
+    here.addr = await addressFor(lat, lon);
+    $("gpsMsg").textContent = here.addr || "Location found.";
+    return here;
+  } catch(e){
+    $("gpsMsg").textContent = "Couldn't get your location. In Safari, allow location for this site.";
+    return null;
+  }
+}
+async function saveSpot(k){
+  const h = await updateHere(); if(!h) return false;
+  spots[k] = {lat: h.lat, lon: h.lon}; save("spots", spots); return true;
+}
+function openSpot(k, label){
+  const sp = spots[k];
+  if(!sp){ $("gpsMsg").textContent = "You haven't saved " + label + " yet."; return; }
+  window.open(dirLink(sp.lat + "," + sp.lon, true), "_blank");
+}
+$("gpsFind").onclick = () => updateHere();
+$("gpsShare").onclick = () => {
+  if(!here){ $("gpsMsg").textContent = "Tap Find me first."; return; }
+  const u = "https://maps.apple.com/?ll=" + here.lat + "," + here.lon + "&q=My%20location";
+  if(navigator.share) navigator.share({title: "My location", url: u}).catch(() => {});
+  else navigator.clipboard.writeText(u).then(() => { $("gpsMsg").textContent = "Link copied."; });
+};
+$("gpsLive").onclick = () => {
+  if(watchId !== null){ navigator.geolocation.clearWatch(watchId); watchId = null; $("gpsLive").textContent = "Live tracking"; $("gpsSpeed").textContent = ""; return; }
+  if(!navigator.geolocation){ $("gpsMsg").textContent = "This phone can't share its location."; return; }
+  $("gpsLive").textContent = "Stop tracking";
+  watchId = navigator.geolocation.watchPosition(p => {
+    const mph = p.coords.speed != null && p.coords.speed >= 0 ? Math.round(p.coords.speed * 2.237) : 0;
+    $("gpsSpeed").textContent = mph + " mph";
+    $("gpsCoords").textContent = p.coords.latitude.toFixed(5) + ", " + p.coords.longitude.toFixed(5) + " (within " + Math.round(p.coords.accuracy) + " m)";
+    here = {lat: p.coords.latitude, lon: p.coords.longitude, addr: here ? here.addr : ""};
+  }, () => { $("gpsMsg").textContent = "Couldn't track your location. Allow location for this site."; }, {enableHighAccuracy: true});
+};
+$("saveParkBtn").onclick = () => saveSpot("park").then(ok => { if(ok) $("gpsMsg").textContent = "Parking spot saved."; });
+$("goParkBtn").onclick = () => openSpot("park", "a parking spot");
+$("saveHomeBtn").onclick = () => saveSpot("home").then(ok => { if(ok) $("gpsMsg").textContent = "Home saved."; });
+$("goHomeBtn").onclick = () => openSpot("home", "home");
+$("gpsForm").onsubmit = e => { e.preventDefault(); const v = $("gpsDest").value.trim(); if(v) window.open(dirLink(v), "_blank"); };
+[["Gas","gas station"],["Food","restaurants"],["Coffee","coffee"],["Pharmacy","pharmacy"],["Hospital","hospital"]].forEach(q => {
+  const b = el("button", "chip", q[0]); b.onclick = () => window.open(searchLink(q[1]), "_blank"); $("gpsQuick").appendChild(b);
+});
+function goSpot(k, label){
+  const sp = spots[k];
+  if(!sp){ say("You haven't saved " + label + " yet."); return; }
+  addLink("Directions to " + label, dirLink(sp.lat + "," + sp.lon, true));
+  say("Tap the link to start directions to " + label + ".");
+}
+
+function renderAll(){ renderTasks(); renderCal(); renderNotes(); renderSched(); renderExams(); }
 
 $("taskForm").onsubmit = e => { e.preventDefault(); const v = $("taskIn").value.trim(); if(v) addTask(v, $("taskDate").value); $("taskIn").value = ""; $("taskDate").value = ""; };
 $("noteForm").onsubmit = e => { e.preventDefault(); const v = $("noteIn").value.trim(); if(v){ notes.push(v); save("notes", notes); renderAll(); } $("noteIn").value = ""; };
-$("habitForm").onsubmit = e => { e.preventDefault(); const v = $("habitIn").value.trim(); if(v){ habits.push({n: v, d: []}); save("habits", habits); renderAll(); } $("habitIn").value = ""; };
 
-/* ---------- clock ---------- */
 function getGreeting(){
   const h = new Date().getHours();
   return (h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening") + ", " + userName + ".";
@@ -389,7 +635,6 @@ function dateText(){ return new Date().toLocaleDateString([], {weekday: "long", 
 function updateClock(){ $("greeting").textContent = getGreeting(); $("time").textContent = timeText(); $("date").textContent = dateText(); }
 updateClock(); setInterval(updateClock, 1000);
 
-/* ---------- weather ---------- */
 let weatherText = "";
 const codes = {0:"clear",1:"mostly clear",2:"partly cloudy",3:"overcast",45:"foggy",48:"foggy",
 51:"light drizzle",53:"drizzle",55:"heavy drizzle",61:"light rain",63:"rain",65:"heavy rain",
@@ -414,7 +659,6 @@ function loadWeather(){
   }, () => showWeather("Location is off, so I can't check the weather."));
 }
 
-/* ---------- voice out ---------- */
 let blockedText = "";
 function speak(text){
   speechSynthesis.cancel();
@@ -434,7 +678,6 @@ $("hear").onclick = () => { $("hear").style.display = "none"; speak(blockedText)
 let listening = false;
 setInterval(() => $("reactor").classList.toggle("active", speechSynthesis.speaking || listening), 300);
 
-/* ---------- conversation log ---------- */
 function trimLog(){ while($("log").children.length > 30) $("log").removeChild($("log").firstChild); $("log").scrollTop = $("log").scrollHeight; }
 function addLine(who, text){
   const d = el("div", who === "You" ? "you" : "jv"); d.appendChild(el("span", "", text));
@@ -446,7 +689,6 @@ function addLink(label, href){
 }
 function say(text){ addLine("Jarvis", text); speak(text); }
 
-/* ---------- timer ---------- */
 let timerEnd = 0, timerId = null, timerMsg = "";
 function tick(){
   const left = Math.round((timerEnd - Date.now()) / 1000);
@@ -461,7 +703,6 @@ function timeLeftText(){
   return (m ? m + " minute" + (m === 1 ? "" : "s") + " and " : "") + s + " second" + (s === 1 ? "" : "s") + " left.";
 }
 
-/* ---------- study quiz ---------- */
 function parseCards(text){
   const out = [];
   text.split("\n").forEach(line => {
@@ -510,7 +751,6 @@ $("cardText").value = typeof cardsText === "string" ? cardsText : "";
 $("saveCards").onclick = () => { cardsText = $("cardText").value; save("cardsText", cardsText); say("Saved " + parseCards(cardsText).length + " study cards."); };
 $("startQuiz").onclick = () => { cardsText = $("cardText").value; save("cardsText", cardsText); startQuiz(parseCards(cardsText)); };
 
-/* ---------- brain: small talk content ---------- */
 const JOKES = ["Why was the math book sad? It had too many problems.", "Why don't scientists trust atoms? Because they make up everything.", "I told my computer I needed a break, and now it won't stop sending me vacation ads.", "What do you call a fake noodle? An impasta.", "Why did the computer go to the doctor? It caught a virus."];
 const FACTS = ["Honey never spoils. People have found edible honey in ancient tombs.", "Octopuses have three hearts.", "A day on Venus is longer than a year on Venus.", "Bananas are berries, but strawberries are not.", "Sharks are older than trees."];
 const PEP = ["Small steps every day beat big plans you never start.", "You don't have to do it all today. Just the next thing.", "Done is better than perfect.", "Start for five minutes. Momentum does the rest.", "Hard things get easier when you stop waiting to feel ready."];
@@ -521,10 +761,11 @@ function brief(){
   const dated = tasks.filter(x => x.d).sort((a, b) => a.d < b.d ? -1 : 1);
   const n = tasks.length;
   let t = getGreeting() + " It is " + timeText() + " on " + dateText() + ". " + weatherText + " ";
+  const nc = nextClass(); if(nc) t += "Your next class is " + classSpeech(nc) + ". ";
+  const due = tasks.filter(x => x.d === dkey()); if(due.length) t += due.length + " thing" + (due.length === 1 ? " is" : "s are") + " due today: " + due.map(x => x.t).join(", ") + ". ";
   t += n ? "You have " + n + " thing" + (n === 1 ? "" : "s") + " on your list. " : "Your list is empty. ";
   if(dated.length) t += dated[0].t + " is due " + dateWords(dated[0].d) + ". ";
-  const left = habits.filter(h => !h.d.includes(dkey())).length;
-  if(left) t += left + " habit" + (left === 1 ? "" : "s") + " still to do today. ";
+  const ne = nextExam(); if(ne) t += ne.n + " is " + dateWords(ne.d) + ". ";
   if(doneToday()) t += "You've finished " + doneToday() + " already today. ";
   return t.trim();
 }
@@ -557,14 +798,11 @@ function tryMath(s){
 }
 function completeByName(name){
   name = name.trim();
-  let x = tasks.find(t => t.t.toLowerCase().includes(name));
+  const x = tasks.find(t => t.t.toLowerCase().includes(name));
   if(x){ completeTask(x); return "Nice work. Checked off " + x.t + "."; }
-  const h = habits.find(h => h.n.toLowerCase().includes(name) || name.includes(h.n.toLowerCase()));
-  if(h){ if(!h.d.includes(dkey())){ h.d.push(dkey()); save("habits", habits); renderAll(); } return "Logged. " + h.n + " is at a " + streak(h) + " day streak."; }
   return null;
 }
 
-/* ---------- brain: understanding what you say ---------- */
 function handle(raw){
   raw = raw.trim(); if(!raw) return;
   addLine("You", raw);
@@ -608,12 +846,66 @@ function handle(raw){
   if((m = s0.match(/random number (?:between|from) (\d+) (?:and|to) (\d+)/))){ const a = +m[1], b = +m[2], lo = Math.min(a, b), hi = Math.max(a, b); return say("How about " + (lo + Math.floor(Math.random() * (hi - lo + 1))) + "."); }
   if(/\b(i'?m bored|im bored|i am bored)\b/.test(s0)) return say("Let's fix that. I can quiz you, start a focus session, tell you a joke, or plan your next task. Just pick one.");
   if(/\b(i'?m|im|i am|i feel) (so |really |very )?(tired|stressed|overwhelmed|anxious|exhausted|sad|burnt out|burned out)\b/.test(s0)) return say("That's rough, " + userName + ". Take a breath. Pick one small thing, or want me to start a five minute break timer?");
-  if(/\b(what can you do|help|commands|what do you do)\b/.test(s0)) return say("I can manage your tasks and calendar, set timers, take notes, track habits, quiz you, check the weather, do math, and chat. Try: add essay to my list for Friday. Or: what's on my calendar tomorrow. Or: start a focus session.");
+  if(/\b(what can you do|help|commands|what do you do)\b/.test(s0)) return say("I can manage your tasks, calendar, classes and exams, set timers, take notes, quiz you, check the weather, convert units, split tips, and give directions. Try: what class is next. Or: where am I. Or: directions to the mall. Or: start a focus session.");
 
-  if((m = s.match(/^(?:open|go to|show me|switch to) (?:the |my )?(home|tasks?|to[- ]?do|calendar|notes|habits|study)(?: tab| page| screen)?$/))){
-    const w = m[1]; show(/task|to/.test(w) ? "tasks" : w); return say("Opening " + w + ".");
+  if((m = s.match(/^(?:open|go to|show me|switch to) (?:the |my )?(home|tasks?|to[- ]?do|calendar|notes|study|schedule|exams?|grades?|tools|gps|map|more)(?: tab| page| screen)?$/))){
+    const w = m[1];
+    show(/^(tasks?|to[- ]?do)$/.test(w) ? "tasks" : /^exams?$/.test(w) ? "exams" : /^grades?$/.test(w) ? "grades" : w === "map" ? "gps" : w);
+    return say("Opening " + w + ".");
   }
   if(/\b(quiz me|study me|start (a )?quiz|test me)\b/.test(s)){ cardsText = $("cardText").value || cardsText; if(startQuiz(parseCards(cardsText))) addLine("Jarvis", "Starting your quiz."); return; }
+
+  if((m = s.match(/(?:convert )?(\d+(?:\.\d+)?) ?([a-z]+) (?:to|in|into) ([a-z]+)$/))){
+    const a = findUnit(m[2]), b = findUnit(m[3]);
+    if(a >= 0 && b >= 0){ const r = convert(+m[1], a, b); return say(r === null ? "Those units don't match." : m[1] + " " + UNITS[a][2] + " is " + Math.round(r * 100) / 100 + " " + UNITS[b][2] + "."); }
+  }
+  if((m = s.match(/tip (?:on|for) \$?(\d+(?:\.\d+)?)(?: at (\d+) ?(?:percent|%))?(?: (?:split|between|for) (\d+))?/))){
+    const bill = +m[1], pct = m[2] ? +m[2] : 20, n = m[3] ? +m[3] : 1, r = tipCalc(bill, pct, n);
+    return say("A " + pct + " percent tip is $" + r.tip.toFixed(2) + ". The total is $" + r.total.toFixed(2) + (n > 1 ? ", or $" + r.each.toFixed(2) + " each." : "."));
+  }
+
+  if(/\b(next class|what class|which class)\b/.test(s)){
+    if(!sched.length) return say("You haven't added any classes yet. Open More, then Class schedule.");
+    const nc = nextClass(); return say(nc ? "Your next class is " + classSpeech(nc) + "." : "No more classes coming up.");
+  }
+  if(/\b(classes today|my classes|class schedule|schedule today)\b/.test(s)){
+    const cl = classesOn(new Date().getDay());
+    return say(cl.length ? "Today you have: " + cl.map(c => c.n + " at " + fmt12(c.t)).join(". ") + "." : "No classes today.");
+  }
+
+  const ex = parseDate(s);
+  if(ex && /^(?:add|set|schedule) (?:an? )?(?:exam|test|final|quiz)\b/.test(s)){
+    const nm = cap(ex.rest.replace(/^(?:add|set|schedule) (?:an? )?(?:exam|test|final|quiz)(?: for| in| on)? ?/, "")) || "Exam";
+    exams.push({n: nm, d: ex.d}); save("exams", exams); renderAll();
+    return say("Added " + nm + " for " + dateWords(ex.d) + ".");
+  }
+  if(/(exam|test|final)s?\b/.test(s) && /(when|how long|how many days|next|upcoming|countdown|coming up)/.test(s)){
+    const ne = nextExam();
+    return say(ne ? ne.n + " is " + dateWords(ne.d) + ", " + dueLabel(daysUntil(ne.d)) + "." : "You haven't added any exams yet.");
+  }
+
+  if(/\b(where am i|my location|what'?s my location|what street am i on)\b/.test(s)){
+    updateHere().then(h => say(h ? (h.addr ? "You're near " + h.addr.split(",").slice(0, 3).join(",") + "." : "I found you, but couldn't get a street address.") : "I couldn't get your location. Allow location for this site in Safari."));
+    return;
+  }
+  if(/^(?:save|set|mark|remember) (?:my |the )?(?:parking spot|parking|where i parked|car|car location|car'?s location)$/.test(s) || /^i'?m parked here$/.test(s)){
+    saveSpot("park").then(ok => say(ok ? "Parking spot saved." : "I couldn't get your location.")); return;
+  }
+  if(/^(?:save|set|mark) (?:this|here) as (?:my )?home$/.test(s) || /^set (?:my )?home(?: here)?$/.test(s)){
+    saveSpot("home").then(ok => say(ok ? "Home saved." : "I couldn't get your location.")); return;
+  }
+  if(/^(?:where did i park|where'?s my car|find my car|take me to my car)$/.test(s)){ return goSpot("park", "your car"); }
+  if(/^(?:take me home|go home|navigate home|directions home|drive home)$/.test(s)){ return goSpot("home", "home"); }
+  if((m = s.match(/^(?:directions to|navigate to|take me to|drive to|get me to|route to) (.+)$/))){
+    const d = m[1].replace(/^the /, "");
+    if(/^(my car|car|my parking spot|where i parked)$/.test(d)) return goSpot("park", "your car");
+    if(/^(home|my home)$/.test(d)) return goSpot("home", "home");
+    addLink("Directions to " + m[1], dirLink(m[1])); return say("Tap the link to start directions to " + m[1] + ".");
+  }
+  if((m = s.match(/^(?:find|show me) (?:the )?(?:nearest|closest|nearby) (.+)$/)) || (m = s.match(/^(.+?) near me$/))){
+    const q = m[1].replace(/^(?:find|show) (?:me )?(?:a |an |the )?/, "");
+    addLink("Nearby: " + q, searchLink(q)); return say("Tap the link to see " + q + " near you.");
+  }
 
   if(/\b(focus|pomodoro|study session|work session)\b/.test(s) && !/(what|how|tell)/.test(s)){
     startTimer(25 * 60, "Focus session over. Great work, " + userName + ". Take a five minute break."); return say("Focus session started. Twenty five minutes. No distractions. Go.");
@@ -625,15 +917,6 @@ function handle(raw){
     const label = /remind/.test(s) && note ? "Reminder, " + userName + ": " + note[1] + "." : "";
     startTimer(u === "h" ? n * 3600 : u === "m" ? n * 60 : n, label);
     return say((label ? "Okay, I'll remind you in " : "Timer set for ") + n + " " + (u === "h" ? "hour" : u === "m" ? "minute" : "second") + (n === 1 ? "" : "s") + ".");
-  }
-
-  if((m = s.match(/^(?:add|new|start|create) (?:a )?habit (?:of |called )?(.+)$/))){ habits.push({n: cap(m[1]), d: []}); save("habits", habits); renderAll(); return say("New habit added: " + m[1] + "."); }
-  if((m = s.match(/^(?:i )?(?:did|practiced|worked on|completed my|finished my|just did) (.+)$/))){
-    const h = habits.find(x => x.n.toLowerCase().includes(m[1]) || m[1].includes(x.n.toLowerCase()));
-    if(h){ if(!h.d.includes(dkey())){ h.d.push(dkey()); save("habits", habits); renderAll(); } return say("Logged. " + h.n + " is at a " + streak(h) + " day streak."); }
-  }
-  if(/(habit|streak)/.test(s) && /(how|what|read|show|tell|check)/.test(s)){
-    return say(habits.length ? habits.map(h => h.n + ": " + streak(h) + " day streak" + (h.d.includes(dkey()) ? ", done today" : ", not done yet")).join(". ") : "You have no habits yet. Say add habit, then the name.");
   }
 
   const mathAns = tryMath(s); if(mathAns !== null) return say("That's " + mathAns + ".");
@@ -679,12 +962,10 @@ function handle(raw){
   addLink("Search the web for: " + raw, "https://www.google.com/search?q=" + encodeURIComponent(raw));
 }
 
-/* ---------- chips ---------- */
-["Brief me", "What's due", "What should I do first", "Focus session", "Quiz me", "Tell me a joke", "Help"].forEach(c => {
+["Brief me", "What's due", "What class is next", "Where am I", "Focus session", "Quiz me", "Tell me a joke", "Help"].forEach(c => {
   const b = el("button", "chip", c); b.onclick = () => handle(c); $("chips").appendChild(b);
 });
 
-/* ---------- listening ---------- */
 $("form").onsubmit = e => { e.preventDefault(); const v = $("cmd").value; $("cmd").value = ""; handle(v); };
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 let rec = null, recTimer = null;
@@ -713,9 +994,24 @@ $("reactor").onclick = () => {
   try { r.start(); } catch(e){ rec = null; listening = false; }
 };
 
+$("hwFile").onchange = e => {
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = () => { $("hwText").value = String(r.result).slice(0, 8000); };
+  r.readAsText(f);
+};
+$("hwGo").onclick = () => {
+  const t = $("hwText").value.trim();
+  if(!t){ $("hwMsg").textContent = "Paste or load an assignment first."; return; }
+  const p = "Help me understand this assignment and work through it step by step. Explain the ideas and check my thinking as I go.\n\n" + t;
+  navigator.clipboard.writeText(p)
+    .then(() => { $("hwMsg").textContent = "Copied. Paste it into the Claude chat."; })
+    .catch(() => { $("hwMsg").textContent = "Couldn't copy. Copy the text yourself, then paste it into Claude."; });
+  window.open("https://claude.ai/new", "_blank");
+};
+
 renderAll(); renderQuiz(); loadWeather();
 
-/* ---------- Action Button: Shortcuts can open Jarvis with ?say=what you said ---------- */
 (function(){
   let q = null;
   try { q = new URLSearchParams(location.search).get("say"); } catch(e){}
@@ -724,3 +1020,4 @@ renderAll(); renderQuiz(); loadWeather();
 </script>
 </body>
 </html>
+
